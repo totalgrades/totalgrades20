@@ -34,7 +34,7 @@
                         <div class="widget-body">
                             <div class="widget-main">
 
-                        	   <table class="table table-striped table-bordered">
+                        	<table class="table table-striped table-bordered">
                                     <thead>
                                         <th>Term</th>
                                         <th>Start Date</th>
@@ -52,7 +52,11 @@
                                             <td>{{ $term->start_date->toFormattedDateString() }}</td>
                                             <td>{{ $term->end_date->toFormattedDateString() }}</td>
                                             <td>{{ $term->show_until->toFormattedDateString() }}</td>
-                                            <td><strong><a href="{{asset('/schoolsetup/showcoursesgroups/'.$schoolyear->id) }}/{{$term->id}}"><i class="fa fa-check-square fa-2x" aria-hidden="true"></i> select</a></strong>
+                                            <td>
+                                               
+                                                    <a href="{{asset('/schoolsetup/showcoursesgroups/'.$schoolyear->id) }}/{{$term->id}}">
+                                                        <i class="fa fa-check-square fa-2x" aria-hidden="true"></i> select
+                                                    </a>
                                             </td>
                                             
                                            
@@ -60,7 +64,7 @@
                                      @endforeach
                                         
                                     </tbody>
-                                </table>
+                            </table>
 
                             </div>
                         </div>

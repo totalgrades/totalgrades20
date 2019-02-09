@@ -52,17 +52,19 @@
                                     <td>{{ $schoolyear->start_date->toFormattedDateString() }}</td>
                                     <td>{{ $schoolyear->end_date->toFormattedDateString() }}</td>
                                     <td>
-                                        @if ($today->between($schoolyear->start_date, $schoolyear->show_until ))
-                                            <button id="selectTerm-{{$schoolyear->id}}" type="button" class="btn btn-danger">Select Term</button>
-                                        @else
-                                            <button id="selectTerm-{{$schoolyear->id}}" type="button" class="btn btn-primary"><strike>Select Term</strike></button>
-                                        @endif
+                                        <a href="{{asset('/schoolsetup/showcoursesterms/'.$schoolyear->id) }}">
+                                            @if ($today->between($schoolyear->start_date, $schoolyear->show_until ))
+                                                <button type="button" class="btn btn-danger">Select Term</button>
+                                            @else
+                                                <button type="button" class="btn btn-primary"><strike>Select Term</strike></button>
+                                            @endif
+                                        </a>
                                     </td>
                                     @include('admin.superadmin.schoolsetup.courses.selectTermModal')
                                     <script type="text/javascript">
-                                      $('#selectTerm-{{$schoolyear->id}}').on('click', function(e){
+                                      $('#addTerm-{{$schoolyear->id}}').on('click', function(e){
                                          e.preventDefault();
-                                        $('#selectTermModal-{{$schoolyear->id}}').modal('show');
+                                        $('#addTermModal-{{$schoolyear->id}}').modal('show');
                                       })
                                     </script>
                                 </tr>
