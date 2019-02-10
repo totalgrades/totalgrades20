@@ -29,17 +29,6 @@ class CourseSetUpController extends Controller
         return view('admin.superadmin.schoolsetup.courses.schoolyears');
     }
 
-    public function showCoursesTerms($schoolyear_id)
-    {
-    	//find school year
-        $schoolyear = School_year::find($schoolyear_id);
-
-        //get term associated with the school year found above
-        $terms_schoolyear = Term::where('school_year_id', '=', $schoolyear->id)->get();
-
-    
-        return view('admin.superadmin.schoolsetup.showcoursesterms', compact('schoolyear', 'terms_schoolyear'));
-    }
 
     public function showCoursesGroups($schoolyear_id, $term_id)
     {

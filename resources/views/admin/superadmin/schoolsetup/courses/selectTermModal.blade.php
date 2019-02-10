@@ -16,9 +16,9 @@
                         <hr>
                         
                         <div class="list-group">
-                        @foreach($terms->where('school_year_id', $schoolyear->id) as $term) 
-                            <a href="{{asset('/schoolsetup/showcoursesgroups/'.$schoolyear->id) }}/{{$term->id}}" class="list-group-item list-group-item-action">
-                                @if ($today->between($term->start_date, $term->show_until ))
+                        @foreach($terms->where('school_year_id', $schoolyear->id) as $term)
+                            @if ($today->between($term->start_date, $term->show_until )) 
+                                <a href="{{asset('/schoolsetup/showcoursesgroups/'.$schoolyear->id) }}/{{$term->id}}" class="list-group-item list-group-item-action">
                                     <span class="label label-xlg label-danger arrowed arrowed-right"> 
                                     {{$term->term}}
                                     </span>
@@ -26,12 +26,14 @@
                                         <i class="ace-icon fa fa-exclamation-triangle bigger-120"></i>
                                         Current
                                     </span>
-                                @else
+                                </a>
+                            @else
+                                <a href="{{asset('/schoolsetup/showcoursesgroups/'.$schoolyear->id) }}/{{$term->id}}" class="list-group-item list-group-item-action disabled">
                                     <span class="label label-xlg label-primary arrowed arrowed-right"> 
                                     {{$term->term}}
                                     </span>
-                                @endif
-                            </a>
+                                </a>
+                            @endif
                         @endforeach
                         </div>
             

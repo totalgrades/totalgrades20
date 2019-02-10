@@ -2,56 +2,57 @@
 
 @section('content')
 
+<div class="page-header">
+    <h1>
+       Bulk upload {{$schoolyear->school_year}} {{$term->term}} Courses - All Groups                                  
+    </h1>
+</div><!-- /.page-header -->
 
-    <div class="page-header">
-        <h1>
-           Bulk upload {{$schoolyear->school_year}} {{$term->term}} Courses - All Groups
-            @include('flash::message')
-                                            
-        </h1>
-         <br>
-        <div class="row">
-              <div class="col-md-12">
-                <div class="alert alert-info">
-                <h5 style="">
-                  <strong>Downlod Staffers and Registration Codes: <br>
+@include('flash::message')
 
-                  <a href="{{ URL::to('/schoolsetup/staffers/downloadExcelStaffers/xls') }}"><button class="btn btn-success">Download Staffers xls</button></a>
-                  <a href="{{ URL::to('/schoolsetup/staffers/downloadExcelStaffers/xlsx') }}"><button class="btn btn-success">Download Staffers xlsx</button></a>
-                  <a href="{{ URL::to('/schoolsetup/staffers/downloadExcelStaffers/csv') }}"><button class="btn btn-success">Download Staffers CSV</button></a>
+<div class="row">
+  <div class="col-md-6">
+    <form style="border: 4px solid #a1a1a1;margin-top: 15px;padding: 20px;" action="{{ URL::to('/schoolsetup/showcoursesgroups/bulkuploadcourses', [$schoolyear->id, $term->id] ) }}" class="form-horizontal" method="post" enctype="multipart/form-data">
 
-                      
-                </strong><br><br>
-                <strong>Download Groups and Group Names: <br>
-                  <a href="{{ URL::to('/schoolsetup/staffers/downloadExcelGroups/xls') }}"><button class="btn btn-danger">Download Groups xls</button></a>
-                  <a href="{{ URL::to('/schoolsetup/staffers/downloadExcelGroups/xlsx') }}"><button class="btn btn-danger">Download Groups xlsx</button></a>
-                  <a href="{{ URL::to('/schoolsetup/staffers/downloadExcelGroups/csv') }}"><button class="btn btn-danger">Download Groups CSV</button></a>
-                   
-                </strong>
-              </h5>
-                </div>
-              </div>
-          </div>
-        <form style="border: 4px solid #a1a1a1;margin-top: 15px;padding: 20px;" action="{{ URL::to('/schoolsetup/showcoursesgroups/bulkuploadcourses', [$schoolyear->id, $term->id] ) }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+         <input type="file" name="import_file" />
+         {{ csrf_field() }}
+         <br/>
 
-             <input type="file" name="import_file" />
-             {{ csrf_field() }}
-             <br/>
+         <button class="btn btn-primary">Bulk Upload {{$schoolyear->school_year}} {{$term->term}} Courses</button>
 
-             <button class="btn btn-primary">Bulk Upload {{$schoolyear->school_year}} {{$term->term}} Courses</button>
+     </form>
+ </div>
+ <div class="col-md-6">
+   <div class="alert alert-info">
+     <h5 style=""><strong>Download sample file to use as template to Bulk Upload <strong style="color: #FF0000;"> Courses</strong>. </strong><a href="{{ URL::to( '/sample-files/sample-BULK_courses-upload.ods')  }}" target="_blank"><i class="fa fa-hand-o-right fa-2x" aria-hidden="true"></i><strong style="color: #FF0000">Sample Bulk Upload Courses File</strong></a></h5>
+     Please use <strong style="color: #FF0000;">open office</strong> for best result. Excel may throw some errors due to white spaces.
+   </div>
+ </div>
+</div>
+<hr>
+        
+<div class="row">
+  <div class="col-md-6">
+    <div class="alert alert-info">
+      <h5 style="">
+      <strong>Downlod Staffers and Registration Codes: <br>
+        <a href="{{ URL::to('/schoolsetup/staffers/downloadExcelStaffers/xls') }}"><button class="btn btn-success">Download Staffers xls</button></a>
+        <a href="{{ URL::to('/schoolsetup/staffers/downloadExcelStaffers/xlsx') }}"><button class="btn btn-success">Download Staffers xlsx</button></a>
+        <a href="{{ URL::to('/schoolsetup/staffers/downloadExcelStaffers/csv') }}"><button class="btn btn-success">Download Staffers CSV</button></a> 
+      </strong><br><br>
+      <strong>Download Groups and Group Names: <br>
+        <a href="{{ URL::to('/schoolsetup/staffers/downloadExcelGroups/xls') }}"><button class="btn btn-danger">Download Groups xls</button></a>
+        <a href="{{ URL::to('/schoolsetup/staffers/downloadExcelGroups/xlsx') }}"><button class="btn btn-danger">Download Groups xlsx</button></a>
+        <a href="{{ URL::to('/schoolsetup/staffers/downloadExcelGroups/csv') }}"><button class="btn btn-danger">Download Groups CSV</button></a>
+         
+      </strong>
+    </h5>
+    </div>
+  </div>
+</div>
+        
 
-         </form>
-         <hr>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="alert alert-info">
-                  <h5 style=""><strong>Download sample file to use as template to Bulk Upload <strong style="color: #FF0000;"> Courses</strong>. </strong><a href="{{ URL::to( '/sample-files/sample-BULK_courses-upload.ods')  }}" target="_blank"><i class="fa fa-hand-o-right fa-2x" aria-hidden="true"></i><strong style="color: #FF0000">Sample Bulk Upload Courses File</strong></a></h5>
-                  Please use <strong style="color: #FF0000;">open office</strong> for best result. Excel may throw some errors due to white spaces.
-                </div>
-              </div>
-          </div>
-
-    </div><!-- /.page-header -->
+   
 
     <h1 class="display-1">OR</h1>
 

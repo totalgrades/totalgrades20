@@ -40,7 +40,13 @@
 
                                 @foreach ($schoolyears as $key=>$schoolyear)
 
-                                <tr>
+                                
+                                    @if ($today->between($schoolyear->start_date, $schoolyear->show_until ))
+                                    <tr class="active">
+                                    @else
+                                    <tr class="warning">
+                                    @endif
+
                                     <td>{{$key+1}}</td>
                                     <td>
                                         @if ($today->between($schoolyear->start_date, $schoolyear->show_until ))

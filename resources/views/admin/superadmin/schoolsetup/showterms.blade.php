@@ -53,7 +53,11 @@
                         <tbody>
                             @foreach ($schoolyear_terms as $term)
 
-                            <tr>
+                            @if ($today->between($term->start_date, $term->show_until ))
+                            <tr class="active">
+                            @else
+                            <tr class="warning">
+                            @endif
                                 <td>
                                     @if ($today->between($term->start_date, $term->show_until ))
                                         <span style="color: #D15B47; font-weight: bold;">Current:</span> 
@@ -80,11 +84,9 @@
                                   })
                                 </script>
                                 <td>
-                                    <strong>
-                                        <a href="{{asset('/schoolsetup/posttermdelete/'.$term->id) }}" onclick="return confirm('Are you sure you want to Delete this record?')">
-                                            <i class="danger fa fa-trash-o fa-2x" aria-hidden="true" style="color:red"></i>
-                                        </a>
-                                    </strong>
+                                    <a href="{{asset('/schoolsetup/posttermdelete/'.$term->id) }}" onclick="return confirm('Are you sure you want to Delete this record?')">
+                                        <i class="danger fa fa-trash-o fa-2x" aria-hidden="true" style="color:red"></i>
+                                    </a>
                                 </td>
                                
                             </tr>

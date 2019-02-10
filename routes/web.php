@@ -309,8 +309,8 @@ Route::group(['middleware' => 'admin_auth'], function(){
         Route::post('/schoolsetup/postgroupupdate/{group}', 'AdminAuth\GroupSetUpController@postGroupUpdate');
         Route::get('/schoolsetup/postgroupdelete/{group}', 'AdminAuth\GroupSetUpController@deleteGroup');
 
+        //Step 3: add, edit, delete courses
         Route::get('/schoolsetup/courses/schoolyears', 'AdminAuth\CourseSetUpController@schoolYears');
-        Route::get('/schoolsetup/showcoursesterms/{schoolyear}', 'AdminAuth\CourseSetUpController@showCoursesTerms');
         Route::get('/schoolsetup/showcoursesgroups/{schoolyear}/{term}', 'AdminAuth\CourseSetUpController@showCoursesGroups');
             Route::post('/schoolsetup/showcoursesgroups/bulkuploadcourses/{schoolyear}/{term}', 'AdminAuth\CourseSetUpController@bulkUploadCourses');   
         Route::get('/schoolsetup/showcourses/{schoolyear}/{term}/{group}', 'AdminAuth\CourseSetUpController@showCourses')->name('showcourses');
