@@ -12,7 +12,7 @@
             <div class="modal-body">
                 <div class="widget-body">
                     <div class="widget-main">
-                        <h5 class="modal-title">{{strtoupper('Select a Term')}}</h5>
+                        <h5 class="modal-title">{{strtoupper('Select Current Term')}}</h5>
                         <hr>
                         
                         <div class="list-group">
@@ -28,7 +28,7 @@
                                     </span>
                                 </a>
                             @else
-                                <a href="{{asset('/schoolsetup/showcoursesgroups/'.$schoolyear->id) }}/{{$term->id}}" class="list-group-item list-group-item-action disabled">
+                                <a href="" class="list-group-item list-group-item-action disabled" aria-disabled="true">
                                     <span class="label label-xlg label-primary arrowed arrowed-right"> 
                                     {{$term->term}}
                                     </span>

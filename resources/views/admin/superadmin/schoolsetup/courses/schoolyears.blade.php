@@ -10,7 +10,7 @@
                 Add/Edit Courses<br>
             <span style="color: black">
                 <i class="ace-icon fa fa-info-circle blue"></i> Make sure to select the current school year.<br>
-                <i class="ace-icon fa fa-info-circle blue"></i> You can select past school year if you wish to edit past course information.<br>
+                <i class="ace-icon fa fa-info-circle blue"></i> Past school years are disabled.<br>
                 <i class="ace-icon fa fa-info-circle blue"></i> Clicking on 'Select Term' to select a term in that school year.
             </span>
         </div>
@@ -61,7 +61,7 @@
                                         @if ($today->between($schoolyear->start_date, $schoolyear->show_until ))
                                             <button id="selectTerm-{{$schoolyear->id}}" type="button" class="btn btn-danger">Select Term</button>
                                         @else
-                                            <button id="selectTerm-{{$schoolyear->id}}" type="button" class="btn btn-primary"><strike>Select Term</strike></button>
+                                            <button id="selectTerm-{{$schoolyear->id}}" type="button" class="btn btn-primary" disabled><strike>Select Term</strike></button>
                                         @endif
                                     </td>
                                     @include('admin.superadmin.schoolsetup.courses.selectTermModal')
