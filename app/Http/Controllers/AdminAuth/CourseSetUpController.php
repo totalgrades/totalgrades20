@@ -102,19 +102,6 @@ class CourseSetUpController extends Controller
         return view('admin.superadmin.schoolsetup.showcourses', compact('schoolyear', 'term', 'group',  'courses'));
     }
 
-    public function addCourse($schoolyear_id, $term_id, $group_id)
-    {
-
-    	$schoolyear = School_year::find($schoolyear_id);
-
-        $term = Term::find($term_id);
-
-        $group = Group::find($group_id);
-
-        $courses = Course::where('group_id', '=', $group->id)->where('term_id', '=', $term->id)->get();
-
-        return view('admin.superadmin.schoolsetup.addcourse', compact('today', 'teacher', 'teacher_logged_in', 'schoolyear','group', 'term', 'courses'));
-    }
 
     public function postCourse(Request $r, $schoolyear_id, $term_id, $group_id) 
     {
@@ -148,22 +135,6 @@ class CourseSetUpController extends Controller
         
         return redirect()->route('showcourses', [ 'school_year_id' => $schoolyear->id, 'term_id' => $term->id, 'group_id' => $group->id]);
     }
-
-    public function editCourse($schoolyear_id, $course_id, $term_id, $group_id)
-    {
-        $schoolyear = School_year::find($schoolyear_id);
-        
-        $course = Course::find($course_id);
-
-        $term = Term::find($term_id);
-
-        $group = Group::find($group_id);
-        
-                
-        return view('admin.superadmin.schoolsetup.editcourse', compact('schoolyear', 'course', 'term', 'group'));
-    }
-
-
 
     public function postCourseUpdate(Request $r, $id, $group_id, $term_id)
 

@@ -31,7 +31,7 @@
       {{ csrf_field() }}
       <br/>
       <button class="btn btn-primary"> <i class="ace-icon fa fa-cloud-upload"></i> Upload</button>
-      <br>
+      <hr>
       Bulk upload {{$schoolyear->school_year}} {{$term->term}} courses for all groups in one file
     </form>
      
@@ -47,8 +47,8 @@
     </h4>
     <div class="alert alert-warning" style="border: 4px solid #a1a1a1; padding: 20px;">
       <button id="selectGroup-{{$schoolyear->id}}-{{$term->id}}" type="button" class="btn btn-pink"> <i class="ace-icon fa fa-check-circle"></i> Select a Group</button>
-      <hr style="margin-top: 15px;">
-      Select a group to upload {{$schoolyear->school_year}} {{$term->term}} courses for the group selected         
+      <hr >
+      Select a group to upload {{$schoolyear->school_year}} {{$term->term}} courses for the group selected or add one course at a time.      
     </div>
     @include('admin.superadmin.schoolsetup.courses.selectGroupModal')
     <script type="text/javascript">

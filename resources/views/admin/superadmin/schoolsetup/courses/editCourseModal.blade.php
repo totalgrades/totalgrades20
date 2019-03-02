@@ -1,40 +1,22 @@
-@extends('admin.superadmin.dashboard')
-
-@section('content')
-
-
-<div class="page-header">
-    <h1>
-        Editting {{$course->name}}
-        <hr>
-        @include('flash::message')
-        
-    </h1>
-</div><!-- /.page-header -->
-
-<form class="form-group" action="{{ url('/schoolsetup/postcourseupdate', [$course->id, $group->id, $term->id])}}" method="POST">
-
-	{{ csrf_field() }}
-
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="widget-box">
-                <div class="widget-header">
-                    <h4 class="widget-title">Edit {{$course->name}} - {{$schoolyear->school_year}} - {{$term->term}} - {{$group->name}} </h4>
-                    <span class="widget-toolbar">
-                        <strong><a href="{{ URL::previous() }}">
-                            <i class="ace-icon fa fa-arrow-left fa-2x"></i>
-                            Back
-                        </a></strong>
-                    </span>
-                    
-                    
-                </div>
-
+<!-- The Modal -->
+<div class="modal fade" id="editCourseModal-{{$schoolyear->id}}{{$term->id}}{{$group->id}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color: #7FB3D5; color: #FFF">
+                <h4 class="modal-title"><strong>Editing {{$course->course_code}}: {{$course->name}} </strong></h4>
+                <h5 class="modal-title"><strong>School year: {{$schoolyear->school_year}}</strong></h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body">
                 <div class="widget-body">
                     <div class="widget-main">
+                    <form class="form-group" action="{{ url('/schoolsetup/postcourseupdate', [$course->id, $group->id, $term->id])}}" method="POST">
+                    {{ csrf_field() }}
 
-                    <label for="school-year">Term : {{$term->term}}</label>
+                        <label for="school-year">Term : {{$term->term}}</label>
 
                         <div class="row">
                             <div class="col-xs-8 col-sm-11">
@@ -62,7 +44,7 @@
 
                         <hr />
 
-                     <label for="school-year">Course Code</label>
+                        <label for="school-year">Course Code</label>
 
                         <div class="row">
                             <div class="col-xs-8 col-sm-11">
@@ -77,7 +59,7 @@
                         <hr />
 
 
-                    <label for="school-year">Course Name</label>
+                        <label for="school-year">Course Name</label>
 
                         <div class="row">
                             <div class="col-xs-8 col-sm-11">
@@ -93,42 +75,26 @@
 
                         
                         <div class="clearfix form-actions">
-							<div class="col-md-offset-3 col-md-9">
-								
-								<input type="submit" value="Submit">
+                            <div class="col-md-offset-3 col-md-9">
+                                
+                                <input type="submit" value="Submit">
 
-								&nbsp; &nbsp; &nbsp;
-								<button class="btn" type="reset">
-									<i class="ace-icon fa fa-undo bigger-110"></i>
-									Reset
-								</button>
-							</div>
-						</div>
-            
+                                &nbsp; &nbsp; &nbsp;
+                                <button class="btn" type="reset">
+                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                     </div>
-                </div>
-            </div>
+                </div>  
+            </div>      
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
-
+            
+        </div>
     </div>
-</form>
-
-
-<div class="hr hr-18 dotted hr-double"></div>
-<br>
-
-<div class="alert-danger">
-
-<ul>
-	@foreach($errors->all() as $error)
-
-		<li> {{ $error }}</li>
-
-	@endforeach
-
-</ul>
-
 </div>
-
-
-@endsection

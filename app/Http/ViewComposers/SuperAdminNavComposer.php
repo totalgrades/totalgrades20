@@ -56,6 +56,7 @@ Class SuperAdminNavComposer {
 
         //Staffers
         $staffers = Staffer::get();
+        $teachers = Staffer::get();
 
         $current_staffers_registrations = @StafferRegistration::with('staffer')->with('school_year')->with('term')->with('group')->where('staffer_registrations.school_year_id', '=', $current_school_year->id)->where('staffer_registrations.term_id', '=', $current_term->id)->get();
 
@@ -92,6 +93,7 @@ Class SuperAdminNavComposer {
         ->with('admin_users', $admin_users)
         ->with('teacher', $teacher)
         ->with('staffers', $staffers)
+        ->with('teachers', $teachers)
         ->with('groups', $groups)
         ->with('feetypes', $feetypes)
         ->with('students', $students)
