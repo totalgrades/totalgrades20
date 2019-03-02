@@ -20,7 +20,7 @@
 		                   </div>
 							<h1 class="text-center title">
 								@if(@$school->name == null)
-									Totalgrades Demo School
+									Totalgrades v2.0 Demo School
 								@else
 									{{ $school->name }}
 								@endif
