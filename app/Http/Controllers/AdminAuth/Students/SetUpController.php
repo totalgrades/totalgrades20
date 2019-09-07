@@ -22,6 +22,11 @@ use PDF;
 
 class SetUpController extends Controller
 {
+    public function manage()
+    {   
+        
+        return view('admin.superadmin.schoolsetup.students.manage');
+    }
     public function showGroups()
     {   
         
