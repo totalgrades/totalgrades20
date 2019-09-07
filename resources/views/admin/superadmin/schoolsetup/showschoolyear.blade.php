@@ -9,15 +9,17 @@
             <strong class="green">
                 Step 1:
             </strong>
-                Edit School Years
+                Edit School Years<br>
             <span style="color: black">
-                (You can add school years here. Expample school years are provided. You can delete them or you can edit them as needed to conform with your school.)
+                <i class="ace-icon fa fa-info-circle blue"></i> You can add school years here. <br>
+                <i class="ace-icon fa fa-info-circle blue"></i> Expample school years are provided.<br>
+                <i class="ace-icon fa fa-info-circle blue"></i> You can delete them or you can edit them as needed to conform with your school.
             </span>
         </div>
     </div><!-- /.page-header -->
     <button id="addSchoolYear" class="btn btn-danger" data-toggle="tooltip" title="add new school year" style="border-radius: 6px;">
         <i class="ace-icon fa fa-list align-top bigger-125"></i>
-        <strong>Add Your School</strong>
+        <strong>New School Year</strong>
     </button>
 
     @include('admin.superadmin.schoolsetup.addSchoolYearModal')
