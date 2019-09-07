@@ -119,7 +119,7 @@ class SetUpController extends Controller
 
             $school_edit->save();
 
-            flash('Scho0l Updated Successfully')->success();
+            flash('School Updated Successfully')->success();
 
             return redirect()->route('showschools');
 

@@ -8,8 +8,7 @@
               <hr>
               <h5 class="modal-title">School year: {{$schoolyear->school_year}} </h5>
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            
+            </div>            
             <!-- Modal body -->
             <div class="modal-body">
 
@@ -98,10 +97,8 @@
                                         
                     </form>
                 </div>
-            </div>
-                  
-        </div>
-                
+            </div>             
+        </div>              
         <!-- Modal footer -->
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
