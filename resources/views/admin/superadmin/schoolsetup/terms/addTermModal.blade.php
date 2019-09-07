@@ -20,11 +20,33 @@
                                 <i class="fa fa-circle"></i> End Date: {{$schoolyear->end_date->toFormatteddateString()}}
                             </li>
                             <li>
-                                <i class="fa fa-circle"></i> Show Until: {{$schoolyear->end_date->toFormatteddateString()}}
+                                <i class="fa fa-circle"></i> Show Until: {{$schoolyear->show_until->toFormatteddateString()}}
                             </li>
                         </ul>
                     </li>
-                </ul>      
+                </ul>
+                <ul class="list-unstyled spaced2">
+                    <li>
+                        <ul class="list-inline">
+                            @foreach ($schoolyear_terms as $term)
+                            <li>
+                                <i class="fa fa-circle"></i> {{$term->term}}:
+                                <ul>
+                                    <li>
+                                        Start: {{ $term->start_date->toFormattedDateString() }}
+                                    </li>
+                                    <li>
+                                        End: {{ $term->end_date->toFormattedDateString() }}
+                                    </li>
+                                    <li>
+                                        Next Term minus 1 day: {{ $term->show_until->toFormattedDateString() }}
+                                    </li>
+                                </ul>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </li>
+                </ul>       
             </h5>
               <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>            
@@ -85,7 +107,8 @@
                         <ul>
                             <li><label for="show_until">Show Until (yyyy-mm-dd)</label></li>
                             <li><label for="show_until">Set this to 1 day before next term's start date</label></li>
-                            <li><label for="show_until">Make sure you add next school year before the current school year ends</label></li>
+                            <li><label for="show_until" style="color: red">Remember to create next school year before the current school year ends</label>
+                            </li>
                         </ul>
                         <div class="row">
                             <div class="col-xs-8 col-sm-11">
