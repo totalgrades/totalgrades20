@@ -3,8 +3,7 @@
 @section('content')
 <div class="page-header">
     <div class="alert alert-block alert-success">
-        <i class="ace-icon fa fa-info-circle red"></i>
-        
+        <i class="ace-icon fa fa-info-circle red"></i>       
         <strong class="green">
             Step 5:
         </strong>
@@ -15,6 +14,17 @@
     </div>  
 </div><!-- /.page-header -->
 @include('flash::message')
+@if ($message = Session::get('success'))
+    <div class="alert alert-success" role="alert">
+        {{ Session::get('success') }}
+    </div>
+@endif
+
+@if ($message = Session::get('error'))
+    <div class="alert alert-danger" role="alert">
+        {{ Session::get('error') }}
+    </div>
+@endif
 <div class="row">
     <div class="col-sm-6">
         <div class="widget-box">
@@ -44,7 +54,9 @@
                     <hr />
 
                     <p>
-                        <span class="btn btn-warning btn-sm tooltip-warning" data-rel="tooltip" data-placement="left" title="View Students"><strong>VEIW STUDENTS</strong></span>
+                        <a href="{{url('schoolsetup/students/viewallstudents')}}">
+                            <span class="btn btn-warning btn-sm tooltip-warning" data-rel="tooltip" data-placement="left" title="View Students"><strong>VEIW ALL STUDENTS</strong></span>
+                        </a>
                     </p>
                 </div>
             </div>
@@ -110,8 +122,30 @@
                     <hr />
 
                     <p>
-                        <span class="btn btn-success btn-sm tooltip-success" data-rel="tooltip" data-placement="right" title="Right Success"><strong>ADD NEW STUDENTS</strong></span>
+                        <a href="{{asset('/schoolsetup/students/addnewstudents') }}" id="uploadStudents">
+                            <span class="btn btn-success btn-sm tooltip-success" data-rel="tooltip" data-placement="right" title="Right Success"><strong> <i class="ace-icon fa fa-cloud-upload fa-2x"></i> UPLOAD STUDENTS</strong>
+                            </span>
+                        </a>
+                        
+                        <a href="{{asset('/schoolsetup/students/addnewstudents') }}" id="addStudent">
+                            <span class="btn btn-danger btn-sm tooltip-success" data-rel="tooltip" data-placement="right" title="Right Success"><strong> <i class="ace-icon fa fa-plus fa-2x"></i> ADD A STUDENT</strong>
+                            </span>
+                        </a>
                     </p>
+                    @include('admin.superadmin.schoolsetup.students.uploadStudentsModal')
+                    <script type="text/javascript">
+                      $('#uploadStudents').on('click', function(e){
+                         e.preventDefault();
+                        $('#uploadStudentsModal').modal('show');
+                      })
+                    </script>
+                    @include('admin.superadmin.schoolsetup.students.addStudentModal')
+                    <script type="text/javascript">
+                      $('#addStudent').on('click', function(e){
+                         e.preventDefault();
+                        $('#addStudentModal').modal('show');
+                      })
+                    </script>
                 </div>
             </div>
         </div>

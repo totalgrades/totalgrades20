@@ -5,6 +5,7 @@
             <!-- Modal Header -->
             <div class="modal-header" style="background-color: #7FB3D5; color: #FFF">
               <h4 class="modal-title"><strong>Editing {{ $term->term }}</strong></h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
               <hr>
               <h5 class="modal-title">School year: {{$schoolyear->school_year}} </h5>
               <button type="button" class="close" data-dismiss="modal">&times;</button>
