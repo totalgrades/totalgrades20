@@ -48,6 +48,7 @@
                 </thead>
 
                 <tbody>
+                    @foreach ($students as $key=>$student)
                     <tr>
                         <td class="center">
                             <label class="pos-rel">
@@ -57,11 +58,15 @@
                         </td>
 
                         <td>
-                            <a href="#">app.com</a>
+                            <strong>
+                                <a href="{{asset('/schoolsetup/students/studentdetails/'.$student->id) }}">
+                                {{ $student->student_number }}
+                                </a>
+                            </strong>
                         </td>
-                        <td>$45</td>
-                        <td class="hidden-480">3,330</td>
-                        <td>Feb 12</td>
+                        <td>{{ $student->first_name }}</td>
+                        <td>{{ $student->last_name }}</td>
+                        <td>{{ $student->gender }}</td>
 
                         <td class="hidden-480">
                             <span class="label label-sm label-warning">Expiring</span>
@@ -117,6 +122,7 @@
                             </div>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

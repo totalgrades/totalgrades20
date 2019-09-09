@@ -50,9 +50,11 @@
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>
-                                    <strong><a href="{{asset('/schoolsetup/students/studentdetails/'.$student->id) }}">
+                                    <strong>
+                                        <a href="{{asset('/schoolsetup/students/studentdetails/'.$student->id) }}">
                                         {{ $student->student_number }}
-                                    </a></strong>
+                                        </a>
+                                    </strong>
                                 </td>
                                 <td>{{ $student->first_name }}</td>
                                 <td>{{ $student->last_name }}</td>
