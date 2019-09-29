@@ -1,15 +1,55 @@
 <!-- The Modal -->
 <div class="modal fade" id="addTermModal-{{$schoolyear->id}}">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header" style="background-color: #7FB3D5; color: #FFF">
               <h4 class="modal-title"><strong>Add Term Form</strong></h4>
               <hr>
-              <h5 class="modal-title">School year: {{$schoolyear->school_year}} </h5>
+              <h5 class="modal-title">
+                <ul class="list-unstyled spaced2">
+                    <li>
+                        <ul class="list-inline">
+                            <li>
+                                <i class="fa fa-circle"></i> School year: {{$schoolyear->school_year}}
+                            </li>
+                            <li>
+                                <i class="fa fa-circle"></i> Start date: {{$schoolyear->start_date->toformatteddateString()}}
+                            </li>
+                            <li>
+                                <i class="fa fa-circle"></i> End Date: {{$schoolyear->end_date->toFormatteddateString()}}
+                            </li>
+                            <li>
+                                <i class="fa fa-circle"></i> Show Until: {{$schoolyear->show_until->toFormatteddateString()}}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="list-unstyled spaced2">
+                    <li>
+                        <ul class="list-inline">
+                            @foreach ($schoolyear_terms as $term)
+                            <li>
+                                <i class="fa fa-circle"></i> {{$term->term}}:
+                                <ul>
+                                    <li>
+                                        Start: {{ $term->start_date->toFormattedDateString() }}
+                                    </li>
+                                    <li>
+                                        End: {{ $term->end_date->toFormattedDateString() }}
+                                    </li>
+                                    <li>
+                                        Next Term minus 1 day: {{ $term->show_until->toFormattedDateString() }}
+                                    </li>
+                                </ul>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </li>
+                </ul>       
+            </h5>
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            
+            </div>            
             <!-- Modal body -->
             <div class="modal-body">
 
@@ -67,7 +107,8 @@
                         <ul>
                             <li><label for="show_until">Show Until (yyyy-mm-dd)</label></li>
                             <li><label for="show_until">Set this to 1 day before next term's start date</label></li>
-                            <li><label for="show_until">Make sure you add next school year before the current school year ends</label></li>
+                            <li><label for="show_until" style="color: red">Remember to create next school year before the current school year ends</label>
+                            </li>
                         </ul>
                         <div class="row">
                             <div class="col-xs-8 col-sm-11">
@@ -98,10 +139,8 @@
                                         
                     </form>
                 </div>
-            </div>
-                  
-        </div>
-                
+            </div>             
+        </div>              
         <!-- Modal footer -->
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

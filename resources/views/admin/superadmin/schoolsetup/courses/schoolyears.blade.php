@@ -9,8 +9,9 @@
             </strong>
                 Add/Edit Courses<br>
             <span style="color: black">
-                <i class="ace-icon fa fa-info-circle blue"></i> Make sure to select the current school year.<br>
-                <i class="ace-icon fa fa-info-circle blue"></i> Past school years are disabled.<br>
+                <i class="ace-icon fa fa-info-circle blue"></i> <span style="color: red">You can only add courses to current school year.</span><br>
+                <i class="ace-icon fa fa-info-circle blue"></i> Make sure to select the current school year and current term.<br>
+                <i class="ace-icon fa fa-info-circle blue"></i> Past and future school years are disabled.<br>
                 <i class="ace-icon fa fa-info-circle blue"></i> Clicking on 'Select Term' to select a term in that school year.
             </span>
         </div>

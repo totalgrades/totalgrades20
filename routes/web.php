@@ -325,6 +325,7 @@ Route::group(['middleware' => 'admin_auth'], function(){
         Route::post('/schoolsetup/postunassigncourse/{course}', 'AdminAuth\Courses\AssignUnassignController@postUnassignCourse');
 
         //students setup
+        Route::get('/schoolsetup/students/manage', 'AdminAuth\Students\SetUpController@manage');
         Route::get('/schoolsetup/students/showgroups', 'AdminAuth\Students\SetUpController@showGroups');
         Route::get('/schoolsetup/students/showregisteredstudents/{group}', 'AdminAuth\Students\SetUpController@showStudents')->name('showstudents');
         Route::post('/schoolsetup/students/postregisterstudent', 'AdminAuth\Students\SetUpController@postRegisterStudent');

@@ -22,6 +22,11 @@ use PDF;
 
 class SetUpController extends Controller
 {
+    public function manage()
+    {   
+        
+        return view('admin.superadmin.schoolsetup.students.manage');
+    }
     public function showGroups()
     {   
         
@@ -258,7 +263,7 @@ class SetUpController extends Controller
 
             }
 
-            return back()->with('error','Please Check your file, Something is wrong there.');
+            return back()->with('error','Upload errror! Please Check your file, Something is wrong there.');
         }
 
         public function importStudents(Request $request)
@@ -313,7 +318,7 @@ class SetUpController extends Controller
 
             }
 
-            return back()->with('error','Please Check your file, Something is wrong there.');
+            return back()->with('error','Upload errror! Please Check your file, Something is wrong there.');
         }
 
     

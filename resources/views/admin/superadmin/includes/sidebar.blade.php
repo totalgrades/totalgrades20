@@ -65,6 +65,14 @@
                         <b class="arrow"></b>
                     </li>
 
+                    <li {{{ (Request::is('schoolsetup/students/manage') ? 'class=active' : '') }}}>
+                        <a href="{{ url('/schoolsetup/students/manage') }}">
+                            <i class="menu-icon fa fa-users"></i>
+                            <span class="menu-text"> Step 5 Manage </span>
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
                     <li {{{ (Request::is('schoolsetup/students/showgroups') ? 'class=active' : '') }}}>
                         <a href="{{ url('/schoolsetup/students/showgroups') }}">
                             <i class="menu-icon fa fa-users"></i>
@@ -73,7 +81,6 @@
 
                         <b class="arrow"></b>
                     </li>
-
                     <li {{{ (Request::is('schoolsetup/staffers/showstaffers') ? 'class=active' : '') }}}>
                         <a href="{{ url('/schoolsetup/staffers/showstaffers') }}">
                             <i class="menu-icon fa fa-user-plus"></i>

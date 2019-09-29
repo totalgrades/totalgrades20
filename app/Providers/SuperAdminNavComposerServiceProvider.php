@@ -25,6 +25,7 @@
             'admin.superadmin.schoolsetup.addterm',
             'admin.superadmin.schoolsetup.editterm',
             'admin.superadmin.schoolsetup.terms.schoolyears',
+            'admin.superadmin.schoolsetup.students.manage',
             'admin.superadmin.schoolsetup.showgroups',
             'admin.superadmin.schoolsetup.addgroup',
             'admin.superadmin.schoolsetup.editgroup',
