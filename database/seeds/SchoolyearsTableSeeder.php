@@ -35,6 +35,13 @@ class SchoolyearsTableSeeder extends Seeder
                     'end_date'=>Carbon::create('2019', '07', '22'),
                     'show_until'=>Carbon::create('2019', '09', '11')
                  ),
+
+            array(
+                    'school_year'=>'2019/2020', 
+                    'start_date'=>Carbon::create('2019', '09', '12'),
+                    'end_date'=>Carbon::create('2020', '07', '22'),
+                    'show_until'=>Carbon::create('2020', '09', '11')
+                 ),
              
           ));
     }
