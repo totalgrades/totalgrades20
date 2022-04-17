@@ -37,7 +37,7 @@ class CourseSetUpController extends Controller
 
         $schoolyear = School_year::find($schoolyear_id);
 
-        return view('admin.superadmin.schoolsetup.showcoursesgroups', compact('schoolyear', 'term', 'courses_term'));
+        return view('admin.superadmin.schoolsetup.showcoursesgroups', compact('schoolyear', 'term'));
     }
 
     public function bulkUploadCourses(Request $request, $schoolyear, $term)
