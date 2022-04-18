@@ -37,13 +37,12 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Gender</th>
-                        <th>DoB</th>
                         <th>Status</th>
-                        <th>Parent Phone</th>
-                        <th>Parent Email</th>
+                        <th>Date Enrolled</th>
+                        <th>Date Graduated</th>
                         <th>State</th>
-
-                        <th></th>
+                        <th>Phone</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
 
@@ -67,10 +66,28 @@
                         <td>{{ $student->first_name }}</td>
                         <td>{{ $student->last_name }}</td>
                         <td>{{ $student->gender }}</td>
-
                         <td class="hidden-480">
-                            <span class="label label-sm label-warning">Expiring</span>
+                            @if($student->date_graduated)
+                                <span class="label label-sm label-warning">
+                                    Graduated
+                                </span>
+                            @elseif($student->date_unenrolled)
+                                <span class="label label-sm label-danger">
+                                    UnEnrolled
+                                </span>
+                            @else
+                                <span class="label label-sm label-success">
+                                    Active
+                                </span> 
+                            @endif
+                            
                         </td>
+                        <td>{{ $student->date_enrolled }}</td>
+                        <td>{{ $student->date_graduated }}</td>
+                        <td>{{ $student->state }}</td>
+                        <td>{{ $student->phone }}</td>
+
+                        
 
                         <td>
                             <div class="hidden-sm hidden-xs action-buttons">

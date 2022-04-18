@@ -18,6 +18,8 @@ use Excel;
 use Image;
 use Auth;
 use DB;
+use App\ExcelImports\CoursesImport;
+use App\ExcelImports\GroupCoursesImport;
 
 
 
@@ -41,51 +43,19 @@ class CourseSetUpController extends Controller
     }
 
     public function bulkUploadCourses(Request $request, $schoolyear, $term)
-        {
-           
-            $schoolyear = School_year::find($schoolyear);
+    {
+        try {
 
-            $term = Term::find($term);
+            Excel::import(new CoursesImport($term), request()->file('import_file'));
+            flash('Courses uploaded Successfully!!')->success();
 
-            if($request->hasFile('import_file')){
-                $path = $request->file('import_file')->getRealPath();
+        } catch (\Throwable $th) {
 
-                $data = Excel::load($path, function($reader) {})->get();
-
-                if(!empty($data) && $data->count()){
-
-                    foreach ($data->toArray() as $key => $value) {
-                        if(!empty($value)){
-                            foreach ($value as $v) {        
-                                $insert[] = [
-
-                                    'course_code' => $v['course_code'],
-                                    'name' => $v['course_name'],  
-                                    'term_id' => $term->id,
-                                    'group_id'=>Group::where('name', $v['group_name'])->first()->id,
-                                    //'staffer_id' => Staffer::where('registration_code', $v['staffer_assigned_to'])->first()->id,
-                                    'created_at' => date('Y-m-d H:i:s'),
-                                    'updated_at' => date('Y-m-d H:i:s'),
-                                    
-                                    ];
-                            }
-                        }
-                    }
-
-                    
-                    if(!empty($insert)){
-                        Course::insert($insert);
-                        flash('Courses Bulk Uploaded Successfully')->success();
-                        return back();
-                    }
-
-                }
-
-            }
-
-            flash('Please Check your file, Something is wrong there')->error();
-            return back();
+            flash($th->getMessage())->error();
         }
+    
+        return back();
+    }
     
 
     public function showCourses($schoolyear_id, $term_id, $group_id)
@@ -105,6 +75,7 @@ class CourseSetUpController extends Controller
 
     public function postCourse(Request $r, $schoolyear_id, $term_id, $group_id) 
     {
+        
         $schoolyear = School_year::find($schoolyear_id);
         $term = Term::find($term_id);
         $group = Group::find($group_id);
@@ -137,7 +108,6 @@ class CourseSetUpController extends Controller
     }
 
     public function postCourseUpdate(Request $r, $id, $group_id, $term_id)
-
     {
         $this->validate(request(), [
 
@@ -167,57 +137,31 @@ class CourseSetUpController extends Controller
         return redirect()->route('showcourses', ['group_id' => $group->id, 'term_id' => $term->id ]);
 
 
-     }
+    }
 
-     public function deleteCourse($id)
-     {
+    public function deleteCourse($id)
+    {
         Course::destroy($id);
 
         flash('Course has been deleted')->error();
 
         return back();
-     }
+    }
 
 
     public function importCourses(Request $request, $group_id, $term_id)
     {
-       
-        $group = Group::find($group_id);
-        $term = Term::find($term_id);
+        try {
 
-        if($request->hasFile('import_file')){
-            $path = $request->file('import_file')->getRealPath();
+            Excel::import(new GroupCoursesImport($term_id,$group_id), request()->file('import_file'));
+            flash('Courses uploaded Successfully!!')->success();
 
-            $data = Excel::load($path, function($reader) {})->get();
+        } catch (\Throwable $th) {
 
-            if(!empty($data) && $data->count()){
-
-                foreach ($data->toArray() as $key => $value) {
-                    if(!empty($value)){
-                        foreach ($value as $v) {        
-                            $insert[] = [
-
-                                'term_id' => $term->id,
-                                'group_id' => $group->id,
-                                'course_code' => $v['course_code'], 
-                                'name' => $v['name'],
-                                'staffer_id' => $v['staffer_id'],
-                                ];
-                        }
-                    }
-                }
-
-                
-                if(!empty($insert)){
-                    Course::insert($insert);
-                    return back()->with('success','Insert Record successfully.');
-                }
-
-            }
-
+            flash($th->getMessage())->error();
         }
-
-        return back()->with('error','Please Check your file, Something is wrong there.');
+    
+        return back();
     }
 
 

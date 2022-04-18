@@ -18,6 +18,7 @@ use App\Staffer;
 use App\User;
 use Excel;
 use PDF;
+use App\ExcelImports\StudentsImport;
 
 
 class SetUpController extends Controller
@@ -140,8 +141,6 @@ class SetUpController extends Controller
         return redirect()->route('viewallstudents');
     }
 
-
-
     public function editStudent(Student $student)
     {
       
@@ -149,8 +148,7 @@ class SetUpController extends Controller
     }
 
     public function postStudentUpdate(Request $r, Student $student)
-
-        {
+    {
              $this->validate(request(), [
 
                 'student_number' => 'required',
@@ -193,133 +191,93 @@ class SetUpController extends Controller
             return redirect()->route('viewallstudents');
 
 
-         }
+    }
 
-         public function deleteStudent($student)
-         {
-            Student::destroy($student);
+    public function deleteStudent($student)
+    {
+        Student::destroy($student);
 
-            flash('Student has been deleted')->error();
+        flash('Student has been deleted')->error();
 
-            return back();
-         }
+        return back();
+    }
 
-        public function downloadExcelStudents($type)
-        {
-            $data = Student::get()->toArray();
-            return Excel::create('students_download', function($excel) use ($data) {
-                $excel->sheet('students', function($sheet) use ($data)
-                {
-                    $sheet->fromArray($data);
-                });
-            })->download($type);
-        }
+    public function downloadExcelStudents($type)
+    {
+        $data = Student::get()->toArray();
+        return Excel::create('students_download', function($excel) use ($data) {
+            $excel->sheet('students', function($sheet) use ($data)
+            {
+                $sheet->fromArray($data);
+            });
+        })->download($type);
+    }
 
         
-        public function importRegisterStudents(Request $request, Group $group)
-        {
-            //get current date
-            $today = Carbon::today();
-            
-            //get current school year
-            $current_school_year = School_year::where('start_date', '<=', $today)->where('show_until', '>=', $today)->first();
+    public function importRegisterStudents(Request $request, Group $group)
+    {
+        //get current date
+        $today = Carbon::today();
+        
+        //get current school year
+        $current_school_year = School_year::where('start_date', '<=', $today)->where('show_until', '>=', $today)->first();
 
-            $current_term = Term::where([['start_date', '<=', $today], ['show_until', '>=', $today]])->first();
+        $current_term = Term::where([['start_date', '<=', $today], ['show_until', '>=', $today]])->first();
 
-            
-            if($request->hasFile('import_file')){
-                $path = $request->file('import_file')->getRealPath();
+        
+        if($request->hasFile('import_file')){
+            $path = $request->file('import_file')->getRealPath();
 
-                $data = Excel::load($path, function($reader) {})->get();
+            $data = Excel::load($path, function($reader) {})->get();
 
-                if(!empty($data) && $data->count()){
+            if(!empty($data) && $data->count()){
 
-                    foreach ($data->toArray() as $key => $value) {
-                        if(!empty($value)){
-                            foreach ($value as $v) { 
-                                      
-                                $insert[] = [
-
-                                    'registration_code' => $v['registration_code'],
-                                    'student_id' => Student::where('registration_code', $v['registration_code'])->firstOrFail()->id,
-                                    'school_year_id' => $current_school_year->id,                           
-                                    'group_id' => $group->id,
-                                    'term_id' => $current_term->id,
-                                    'created_at' => date('Y-m-d H:i:s'),
-                                    'updated_at' => date('Y-m-d H:i:s'),
+                foreach ($data->toArray() as $key => $value) {
+                    if(!empty($value)){
+                        foreach ($value as $v) { 
                                     
-                                    ];
-                            }
+                            $insert[] = [
+
+                                'registration_code' => $v['registration_code'],
+                                'student_id' => Student::where('registration_code', $v['registration_code'])->firstOrFail()->id,
+                                'school_year_id' => $current_school_year->id,                           
+                                'group_id' => $group->id,
+                                'term_id' => $current_term->id,
+                                'created_at' => date('Y-m-d H:i:s'),
+                                'updated_at' => date('Y-m-d H:i:s'),
+                                
+                                ];
                         }
                     }
+                }
 
-                    
-                    if(!empty($insert)){
-                        StudentRegistration::insert($insert);
-                        return back()->with('success','Insert Record successfully.');
-                    }
-
+                
+                if(!empty($insert)){
+                    StudentRegistration::insert($insert);
+                    return back()->with('success','Insert Record successfully.');
                 }
 
             }
 
-            return back()->with('error','Upload errror! Please Check your file, Something is wrong there.');
         }
 
-        public function importStudents(Request $request)
-        {
-                       
+        return back()->with('error','Upload errror! Please Check your file, Something is wrong there.');
+    }
 
-            if($request->hasFile('import_file')){
-                $path = $request->file('import_file')->getRealPath();
+    public function importStudents(Request $request)
+    {
+        try {
 
-                $data = Excel::load($path, function($reader) {})->get();
+            Excel::import(new StudentsImport(), $request->file('import_file'));
+            flash('Students uploaded Successfully!!')->success();
 
-                if(!empty($data) && $data->count()){
+        } catch (\Throwable $th) {
 
-                    foreach ($data->toArray() as $key => $value) {
-                        if(!empty($value)){
-                            foreach ($value as $v) {        
-                                $insert[] = [
-
-                                    
-                                    'student_number' => $v['student_number'],
-                                    'registration_code' => $v['registration_code'], 
-                                    'first_name'=>$v['first_name'],
-                                    'last_name'=>$v['last_name'],
-                                    'gender'=>$v['gender'],
-                                    'dob'=>$v['dob'],
-                                    'date_enrolled'=>$v['date_enrolled'],
-                                    'date_graduated'=>$v['date_graduated'],
-                                    'date_unenrolled'=>$v['date_unenrolled'],
-                                    'nationality'=>$v['nationality'],
-                                    'national_card_number'=>$v['national_card_number'],
-                                    'passport_number'=>$v['passport_number'],
-                                    'phone'=>$v['phone'],
-                                    'email'=>$v['email'],
-                                    'state'=>$v['state'],
-                                    'current_address'=>$v['current_address'],
-                                    'created_at' => date('Y-m-d H:i:s'),
-                                    'updated_at' => date('Y-m-d H:i:s'),
-                                    
-                                    ];
-                            }
-                        }
-                    }
-
-                    
-                    if(!empty($insert)){
-                        Student::insert($insert);
-                        flash('Student(s) Uploaded Successfully')->success();
-                        return redirect()->route('viewallstudents');
-                    }
-
-                }
-
-            }
-
-            return back()->with('error','Upload errror! Please Check your file, Something is wrong there.');
+            flash($th->getMessage())->error();
         }
-
     
+        return back();
+
+    } 
+
 }
