@@ -16,6 +16,11 @@ class Student extends Model
 {
     use Notifiable;
 
+    protected $fillable = ['student_number','registration_code','first_name','last_name',
+      'gender', 'dob' ,'date_enrolled','date_graduated','date_unenrolled','nationality',
+      'national_card_number','passport_number','phone','email','state','current_address','created_at','updated_at'
+    ];
+
     protected $dates = ['dob'];
 
     public function user()

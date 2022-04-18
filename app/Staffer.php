@@ -12,7 +12,12 @@ use App\Course;
 
 class Staffer extends Model
 {
-	public $fillable = ['group_id'];
+	public $fillable = ['group_id','staffer_number','registration_code','title',
+        'first_name','last_name','gender','employment_status','nationality',
+        'national_card_number','passport_number','phone','email','state','current_address',
+        'date_of_employment','created_at','updated_at'
+    
+    ];
 
     public function admin()
     {

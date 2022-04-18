@@ -22,7 +22,7 @@ use Excel;
 use App\StafferRegistration;
 use PDF;
 use DB;
-
+use App\ExcelImports\StaffersImport;
 
 class SetUpController extends Controller
 {
@@ -36,7 +36,6 @@ class SetUpController extends Controller
     }
 
     public function postMakeSuperAdmin(Request $r, Admin $admin)
-
     {
 
          $makesuperadmin = Admin::where('id', '=', $admin->id)->first();
@@ -49,10 +48,9 @@ class SetUpController extends Controller
 
          return back();
 
-     }
+    }
 
     public function postRemoveSuperAdmin(Request $r, Admin $admin)
-
     {
         
          $removesuperadmin = Admin::where('id', '=', $admin->id)->first();
@@ -66,11 +64,10 @@ class SetUpController extends Controller
          return back();
 
          
-     }
+    }
 
-     public function registerStaffers()
+    public function registerStaffers()
     {
-        
        return view('admin.superadmin.schoolsetup.staffers.registerstaffers');
     }
 
@@ -160,59 +157,59 @@ class SetUpController extends Controller
     }
     
     public function bulkRegisterStaffers(Request $request)
-        {
-            
-            //get current date
-            $today = Carbon::today();
-            
-            //get current school year
-            $current_school_year = School_year::where('start_date', '<=', $today)->where('show_until', '>=', $today)->first();
+    {
+        
+        //get current date
+        $today = Carbon::today();
+        
+        //get current school year
+        $current_school_year = School_year::where('start_date', '<=', $today)->where('show_until', '>=', $today)->first();
 
-            $current_term = Term::where([['start_date', '<=', $today], ['show_until', '>=', $today]])->first();
+        $current_term = Term::where([['start_date', '<=', $today], ['show_until', '>=', $today]])->first();
 
-            if($request->hasFile('import_file')){
-                $path = $request->file('import_file')->getRealPath();
+        if($request->hasFile('import_file')){
+            $path = $request->file('import_file')->getRealPath();
 
-                $data = Excel::load($path, function($reader) {})->get();
+            $data = Excel::load($path, function($reader) {})->get();
 
-                if(!empty($data) && $data->count()){
+            if(!empty($data) && $data->count()){
 
-                    foreach ($data->toArray() as $key => $value) {
-                        if(!empty($value)){
-                            foreach ($value as $v) {        
-                                $insert[] = [
+                foreach ($data->toArray() as $key => $value) {
+                    if(!empty($value)){
+                        foreach ($value as $v) {        
+                            $insert[] = [
 
-                                    
-                                    'staffer_id' => Staffer::where('registration_code', $v['registration_code'])->firstOrFail()->id,
-                                    'school_year_id' => $current_school_year->id,
-                                    'term_id' => $current_term->id,
-                                    'group_id'=>Group::where('name', $v['group_name'])->firstOrFail()->id,
-                                    'created_at' => date('Y-m-d H:i:s'),
-                                    'updated_at' => date('Y-m-d H:i:s'),
-                                    
-                                    ];
-                            }
+                                
+                                'staffer_id' => Staffer::where('registration_code', $v['registration_code'])->firstOrFail()->id,
+                                'school_year_id' => $current_school_year->id,
+                                'term_id' => $current_term->id,
+                                'group_id'=>Group::where('name', $v['group_name'])->firstOrFail()->id,
+                                'created_at' => date('Y-m-d H:i:s'),
+                                'updated_at' => date('Y-m-d H:i:s'),
+                                
+                                ];
                         }
                     }
+                }
 
-                    
-                    if(!empty($insert)){
-                        StafferRegistration::insert($insert);
-                        flash('Teacher(Staffer) Bulk Registered Successfully')->success();
-                        return back();
-                    }
-
+                
+                if(!empty($insert)){
+                    StafferRegistration::insert($insert);
+                    flash('Teacher(Staffer) Bulk Registered Successfully')->success();
+                    return back();
                 }
 
             }
 
-            flash('Please Check your file, Something is wrong there')->error();
-            return back();
         }
+
+        flash('Please Check your file, Something is wrong there')->error();
+        return back();
+    }
     
     
 
-     public function printRegisterStaffersPdf()
+    public function printRegisterStaffersPdf()
     {
         $pdf = PDF::loadView('admin.superadmin.schoolsetup.staffers.printregisterstafferspdf');
 
@@ -249,27 +246,18 @@ class SetUpController extends Controller
 
     	//$staffers_groups= Group::join('staffers', 'groups.id', '=', 'staffers.group_id')->get();
 
-
-
     	$staffers_count = Staffer::count();
 
     	$groups = Group::pluck('name', 'id');
 
-        //dd($groups);
-
-        
         //get current date
         $today = Carbon::today();
 
         $schoolyear = School_year::first();
 
-        
-
-      
-
-        return view('admin.superadmin.schoolsetup.staffers.addstaffer', compact('staffers_groups','today',
+        return view('admin.superadmin.schoolsetup.staffers.addstaffer', compact('today',
         	'schoolyear', 'staffers_count', 'groups'));
-     }
+    }
 
     public function postStaffer(Request $r) 
     {
@@ -337,7 +325,7 @@ class SetUpController extends Controller
 
     public function postStafferUpdate(Request $r, $staffer_id)
 
-        {
+    {
         
             $staffer = Staffer::find($staffer_id);
 
@@ -383,68 +371,30 @@ class SetUpController extends Controller
             return redirect()->route('showstaffers');
 
 
-         }
+    }
 
-         public function deletestaffer($staffer_id)
-         {
-            Staffer::destroy($staffer_id);
+    public function deletestaffer($staffer_id)
+    {
+        Staffer::destroy($staffer_id);
 
-            flash('Staffer has been deleted')->error();
+        flash('Staffer has been deleted')->error();
 
-            return back();
-         }
+        return back();
+    }
 
-        public function importStaffers(Request $request)
-        {
-            
-          
-            if($request->hasFile('import_file')){
-                $path = $request->file('import_file')->getRealPath();
+    public function importStaffers(Request $request)
+    {
+        try {
 
-                $data = Excel::load($path, function($reader) {})->get();
+            Excel::import(new StaffersImport(), $request->file('import_file'));
+            flash('Staffers uploaded Successfully!!')->success();
 
-                if(!empty($data) && $data->count()){
+        } catch (\Throwable $th) {
 
-                    foreach ($data->toArray() as $key => $value) {
-                        if(!empty($value)){
-                            foreach ($value as $v) {        
-                                $insert[] = [
-
-                                    
-                                    'staffer_number' => $v['staffer_number'],
-                                    'registration_code' => $v['registration_code'],
-                                    'title' => $v['title'],
-                                    'first_name'=>$v['first_name'],
-                                    'last_name'=>$v['last_name'],
-                                    'gender'=>$v['gender'],
-                                    'employment_status'=>$v['employment_status'],
-                                    'date_of_employment'=>$v['date_of_employment'],
-                                    'nationality'=>$v['nationality'],
-                                    'national_card_number'=>$v['national_card_number'],
-                                    'passport_number'=>$v['passport_number'],
-                                    'phone'=>$v['phone'],
-                                    'state'=>$v['state'],
-                                    'current_address'=>$v['current_address'],
-                                    
-                                    
-                                    ];
-                            }
-                        }
-                    }
-
-                    
-                    if(!empty($insert)){
-                        Staffer::insert($insert);
-                        flash('Teacher(Staffer) Uploaded Successfully')->success();
-                        return redirect()->route('showstaffers');
-                    }
-
-                }
-
-            }
-
-            flash('Please Check your file, Something is wrong there')->error();
-            return back();
+            flash($th->getMessage())->error();
         }
+        
+        return back();
+    }
 
 }
