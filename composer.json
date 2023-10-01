@@ -7,7 +7,7 @@
     "require": {
         "php": "^7.2|^8.0.2",
         "barryvdh/laravel-snappy": "^0.4.0",
-        "consoletvs/charts": "^7.0",
+        "consoletvs/charts": "^6.0",
         "doctrine/dbal": "^2.5",
         "felixkiss/uniquewith-validator": "^3.1",
         "fideloper/proxy": "^4.0",
@@ -26,7 +26,7 @@
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~6.0",
+        "phpunit/phpunit": "~10.0",
         "filp/whoops": "~2.0"
     },
     "autoload": {
