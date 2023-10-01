@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
          $this->call(YearFourTermsTableSeeder::class);
          $this->call(YearFiveTermsTableSeeder::class);
          $this->call(YearSixTermsTableSeeder::class);
+         $this->call(YearSevenTermsTableSeeder::class);
+         $this->call(YearEightTermsTableSeeder::class);
 		 $this->call(GroupsTableSeeder::class);
 		 $this->call(SaffersTableSeeder::class);
          $this->call(AdminsTableSeeder::class);

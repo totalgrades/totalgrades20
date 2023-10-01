@@ -56,6 +56,18 @@ class SchoolyearsTableSeeder extends Seeder
                     'end_date'=>Carbon::create('2022', '07', '22'),
                     'show_until'=>Carbon::create('2022', '09', '11')
                ),
+          array(
+               'school_year'=>'2022/2023', 
+               'start_date'=>Carbon::create('2022', '09', '12'),
+               'end_date'=>Carbon::create('2023', '07', '22'),
+               'show_until'=>Carbon::create('2023', '09', '11')
+          ),
+          array(
+               'school_year'=>'2023/2024', 
+               'start_date'=>Carbon::create('2023', '09', '12'),
+               'end_date'=>Carbon::create('2024', '07', '22'),
+               'show_until'=>Carbon::create('2024', '09', '11')
+          ),
              
           ));
     }
