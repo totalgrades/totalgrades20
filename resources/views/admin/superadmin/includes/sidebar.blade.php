@@ -10,7 +10,7 @@
 
                     
 
-                    <li {{{ (Request::is('schoolsetup') ? 'class=active' : '') }}}>
+                    <li {{ (request::is('schoolsetup') ? 'class=active' : '') }}>
                         <a href="{{ url('/schoolsetup') }}">
                             <i class="menu-icon fa fa-tachometer"></i>
                             <span class="menu-text">SuperAdmin Area</span>
@@ -19,7 +19,7 @@
                         <b class="arrow"></b>
                     </li>
 
-                    <li {{{ (Request::is('schoolsetup/schools/showschools') ? 'class=active' : '') }}}>
+                    <li {{{ (request::is('schoolsetup/schools/showschools') ? 'class=active' : '') }}}>
                         <a href="{{ url('/schoolsetup/schools/showschools') }}">
                             <i class="menu-icon fa fa-home"></i>
                             <span class="menu-text">Step 0: Add School</span>
@@ -28,7 +28,7 @@
                         <b class="arrow"></b>
                     </li>
 
-                    <li {{{ (Request::is('schoolsetup/showschoolyear') ? 'class=active' : '') }}}>
+                    <li {{{ (request::is('schoolsetup/showschoolyear') ? 'class=active' : '') }}}>
                         <a href="{{ url('/schoolsetup/showschoolyear') }}">
                             <i class="menu-icon fa fa-list"></i>
                             <span class="menu-text">Step 1: School Year</span>
@@ -37,7 +37,7 @@
                         <b class="arrow"></b>
                     </li>
 
-                    <li {{{ (Request::is('schoolsetup/terms/schoolyears') ? 'class=active' : '') }}}>
+                    <li {{{ (request::is('schoolsetup/terms/schoolyears') ? 'class=active' : '') }}}>
                         <a href="{{ url('/schoolsetup/terms/schoolyears') }}">
                             <i class="menu-icon fa fa-text-width"></i>
                             <span class="menu-text">Step 2: Terms</span>
@@ -46,7 +46,7 @@
                         <b class="arrow"></b>
                     </li>
                    
-                   <li {{{ (Request::is('schoolsetup/showgroups') ? 'class=active' : '') }}}>
+                   <li {{{ (request::is('schoolsetup/showgroups') ? 'class=active' : '') }}}>
                         <a href="{{ url('/schoolsetup/showgroups') }}">
                             <i class="menu-icon fa fa-object-group"></i>
                             <span class="menu-text">Step 3: Groups</span>
@@ -56,7 +56,7 @@
                     </li>
 
       
-                    <li {{{ (Request::is('schoolsetup/courses/schoolyears') ? 'class=active' : '') }}}>
+                    <li {{{ (request::is('schoolsetup/courses/schoolyears') ? 'class=active' : '') }}}>
                         <a href="{{ url('/schoolsetup/courses/schoolyears') }}">
                             <i class="menu-icon fa fa-book"></i>
                             <span class="menu-text"> Step 4: Courses </span>
@@ -65,15 +65,7 @@
                         <b class="arrow"></b>
                     </li>
 
-                    <li {{{ (Request::is('schoolsetup/students/manage') ? 'class=active' : '') }}}>
-                        <a href="{{ url('/schoolsetup/students/manage') }}">
-                            <i class="menu-icon fa fa-users"></i>
-                            <span class="menu-text"> Step 5 Manage </span>
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-                    <li {{{ (Request::is('schoolsetup/students/showgroups') ? 'class=active' : '') }}}>
+                    <li {{{ (request::is('schoolsetup/students/showgroups') ? 'class=active' : '') }}}>
                         <a href="{{ url('/schoolsetup/students/showgroups') }}">
                             <i class="menu-icon fa fa-users"></i>
                             <span class="menu-text"> Step 5 Students </span>
@@ -81,7 +73,7 @@
 
                         <b class="arrow"></b>
                     </li>
-                    <li {{{ (Request::is('schoolsetup/staffers/showstaffers') ? 'class=active' : '') }}}>
+                    <li {{{ (request::is('schoolsetup/staffers/showstaffers') ? 'class=active' : '') }}}>
                         <a href="{{ url('/schoolsetup/staffers/showstaffers') }}">
                             <i class="menu-icon fa fa-user-plus"></i>
                             <span class="menu-text"> Step 6: Teachers </span>
@@ -93,7 +85,7 @@
                      <li>
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-money"></i>
-                            <span class="menu-text"> Step 8: Fees </span>
+                            <span class="menu-text"> Step 7: Fees </span>
 
                             <b class="arrow fa fa-angle-down"></b>
                         </a>
@@ -121,7 +113,7 @@
                         </ul>
                     </li>
 
-                    <li {{{ (Request::is('schoolsetup/attendancecodes/showcodes') ? 'class=active' : '') }}}>
+                    <li {{{ (request::is('schoolsetup/attendancecodes/showcodes') ? 'class=active' : '') }}}>
                         <a href="{{ url('/schoolsetup/attendancecodes/showcodes') }}">
                             <i class="menu-icon fa fa-calendar-check-o"></i>
                             <span class="menu-text"> Attendance Code</span>
@@ -130,7 +122,7 @@
                         <b class="arrow"></b>
                     </li>
 
-                    <li {{{ (Request::is('schoolsetup/messages/contactus') ? 'class=active' : '') }}}>
+                    <li {{{ (request::is('schoolsetup/messages/contactus') ? 'class=active' : '') }}}>
                         <a href="{{url('/schoolsetup/messages/contactus')}}">
                             <i class="menu-icon fa fa-envelope"></i>
                             <span class="menu-text">Contact Messages</span>
@@ -139,7 +131,16 @@
                         <b class="arrow"></b>
                     </li>
 
-                    <li {{{ (Request::is('admin_home') ? 'class=active' : '') }}}>
+                    <li {{{ (request::is('schoolsetup/students/manage') ? 'class=active' : '') }}}>
+                        <a href="{{ url('/schoolsetup/students/manage') }}">
+                            <i class="menu-icon fa fa-users"></i>
+                            <span class="menu-text">Manage </span>
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+
+                    <li {{{ (request::is('admin_home') ? 'class=active' : '') }}}>
                         <a href="{{url('/admin_home')}}">
                             <i class="menu-icon fa fa-desktop"></i>
                             <span class="menu-text"> Staff Dashbord</span>
@@ -148,7 +149,7 @@
                         <b class="arrow"></b>
                     </li>
 
-                    <li {{{ (Request::is('schoolsetup/logs/studentsloginactivities') ? 'class=active' : '') }}}>
+                    <li {{{ (request::is('schoolsetup/logs/studentsloginactivities') ? 'class=active' : '') }}}>
                         <a href="{{url('/schoolsetup/logs/studentsloginactivities')}}">
                             <i class="menu-icon fa fa-history"></i>
                             <span class="menu-text"> Log-Students</span>
@@ -157,7 +158,7 @@
                         <b class="arrow"></b>
                     </li>
 
-                    <li {{{ (Request::is('schoolsetup/logs/adminsloginactivities') ? 'class=active' : '') }}}>
+                    <li {{{ (request::is('schoolsetup/logs/adminsloginactivities') ? 'class=active' : '') }}}>
                         <a href="{{url('/schoolsetup/logs/adminsloginactivities')}}">
                             <i class="menu-icon fa fa-history"></i>
                             <span class="menu-text"> Log-Admins</span>
@@ -166,7 +167,7 @@
                         <b class="arrow"></b>
                     </li>
                     
-                    <li {{{ (Request::is('schoolsetup/gradebookActivities/activities') ? 'class=active' : '') }}}>
+                    <li {{{ (request::is('schoolsetup/gradebookActivities/activities') ? 'class=active' : '') }}}>
                         <a href="{{url('/schoolsetup/gradebookActivities/activities')}}">
                             <i class="menu-icon fa fa-pie-chart"></i>
                             <span class="menu-text"> Gradebook Activities</span>

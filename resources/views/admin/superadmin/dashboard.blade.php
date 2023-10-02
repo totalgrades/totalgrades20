@@ -147,8 +147,8 @@
                 <div class="footer-inner">
                     <div class="footer-content">
                         <span class="bigger-120">
-                            <span class="blue bolder">nahorr Analytics</span>
-                            Totalgrades &copy; 2017
+                            <span class="blue bolder">IDEAS</span>
+                            Totalgrades &copy; 2017 - 2023
                         </span>
 
                         &nbsp; &nbsp;

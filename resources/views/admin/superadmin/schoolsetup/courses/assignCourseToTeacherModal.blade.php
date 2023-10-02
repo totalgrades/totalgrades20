@@ -43,6 +43,7 @@
                                             <label for="form-field-select-3">Select an Instructor</label>
 
                                             <br />
+                                  
                                             <select name="staffer_id" class="chosen-select form-control" id="form-field-select-3" data-placeholder="Select an Instructor...">
                                                 <option selected disabled>Please select one option</option>
                                                     @foreach($teachers as $key => $teacher)
