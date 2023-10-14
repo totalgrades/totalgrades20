@@ -56,7 +56,7 @@ Class AdminNavComposer {
 
          //get all users                      
         $all_users = User::get();
-        
+        //dd($all_users);
         //get terms
         $terms = Term::get();
 
