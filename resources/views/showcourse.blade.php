@@ -60,7 +60,11 @@
                             </div>
                             <div class="content">
 
-                             {!! $chart_total_score->render() !!}
+                                <div style="height: 300px" class="mb-4">
+                                    {!! $chart_class_stats->container() !!}
+
+                                    {!! $chart_class_stats->script() !!}
+                                </div>
                                 
                                 <div class="footer">
                                     <hr>
@@ -81,7 +85,11 @@
                             </div>
                             <div class="content">
                          
-                                 {!! $chart_class_stats->render() !!}
+                                <div style="height: 300px" class="mb-4">
+                                    {!! $chart_total_score->container() !!}
+
+                                    {!! $chart_total_score->script() !!}
+                                </div>
                                 
                             
 

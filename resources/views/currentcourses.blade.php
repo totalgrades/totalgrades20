@@ -52,13 +52,12 @@
                                 </p>
                             </div>
                             <div class="content">
+                                <div style="height: 300px" class="mb-4">
+                                    {!! $chart_student_average->container() !!}
 
-                            {!! $chart_student_average->render() !!}
+                                    {!! $chart_student_average->script() !!}
+                                </div>
                                 
-                                
-
-
-
                                 <div class="footer">
                                    <div class="chart-legend">
                                         <i class="fa fa-circle text-primary"></i> Minimum: {{@$school_min}}
