@@ -26,7 +26,7 @@ use App\Attendance;
 use App\AttendanceCode;
 use App\Grade;
 use App\Course;
-use Charts;
+use ConsoleTVs\Charts\Facades\Charts;
 
 
 

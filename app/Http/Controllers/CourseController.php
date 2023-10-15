@@ -16,7 +16,7 @@ use Image;
 use App\Student;
 use App\Grade;
 use App\Group;
-use Charts;
+use ConsoleTVs\Charts\Facades\Charts;
 use \Crypt;
 use App\StudentRegistration;
 use DB;

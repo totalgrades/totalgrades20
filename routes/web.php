@@ -11,11 +11,6 @@
 |
 */
 
-/*Route::get('/', function () {
-
-    $school_year = DB::table('school_years')->first();                                                                                                                                                                                 
-    return view('welcome', compact('school_year'));
-});*/
 //Home Public
 Route::get('/', 'HomePublicController@index')->name('homepublic');
 Route::get('/features', 'HomePublicController@features');

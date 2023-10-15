@@ -178,9 +178,11 @@
                                 </p>
                             </div>
                             <div class="content">
+                                <div style="height: 300px" class="mb-4">
+                                    {!! $school_class_student_chart->container() !!}
 
-                            {!! $school_class_student_chart->render() !!}
-                                
+                                    {!! $school_class_student_chart->script() !!}
+                                </div>
                                 
                                 <div class="footer">
                                    <div class="chart-legend">
@@ -269,4 +271,5 @@
 
             </div>
         </div>
+        
 @endsection

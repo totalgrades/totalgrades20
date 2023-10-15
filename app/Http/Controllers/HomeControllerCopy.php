@@ -16,7 +16,7 @@ use App\User;
 use App\Group;
 use App\Attendance;
 use App\AttendanceCode;
-use App\Charts\CurrentTermStats;
+use ConsoleTVs\Charts\Facades\Charts;
 use \Crypt;
 use App\LoginActivity;
 use Location;
@@ -113,23 +113,13 @@ class HomeController extends Controller
         $student_overall_current_term = $grade_grade_activities_student_schoolyear->max('total')/$number_of_courses_current_term->count();
         
       
-        // $school_class_student_chart = Charts::create('bar', 'highcharts')
-        //         ->title("Overall % Statistics - $term->term")
-        //         ->labels(['Overall % - Class Minimum', 'Overall % - Class Maximum', "Overall % - $student"])
-        //         ->values([ $group_min_overall_current_term,$group_max_overall_current_term,$student_overall_current_term])
-        //         ->dimensions(0,230);
-
-        $school_class_student_chart = new CurrentTermStats;
-        $school_class_student_chart->labels(['Overall % - Class Minimum', 'Overall % - Class Maximum', "Overall % - $student"]);
-        $school_class_student_chart->dataset("Overall % Statistics - $term->term", 'bar', [ $group_min_overall_current_term,$group_max_overall_current_term,$student_overall_current_term])->options([
-            'fill' => 'true',
-            'borderColor' => '#51C1C0']);
-        $school_class_student_chart->height(100);
-
-        return view('homeSchoolYear', 
-                    compact( 'today', 'students_teachers', 'schoolyear', 
-                    'term', 'number_of_courses_current_term', 'class_members', 
-                    'attendance_today', 'att_code', 'school_class_student_chart'));
+        $school_class_student_chart = Charts::create('bar', 'highcharts')
+                ->title("Overall % Statistics - $term->term")
+                ->labels(['Overall % - Class Minimum', 'Overall % - Class Maximum', "Overall % - $student"])
+                ->values([ $group_min_overall_current_term,$group_max_overall_current_term,$student_overall_current_term])
+                ->dimensions(0,230);
+        
+        return view('homeSchoolYear', compact( 'today', 'students_teacher', 'schoolyear', 'term', 'number_of_courses_current_term', 'class_members', 'attendance_today', 'att_code','school_max', 'school_min', 'school_avg', 'school_class_student_chart', 'school_max_school_year', 'school_min_school_year', 'school_avg_school_year', 'join_term_attendance'));
     }
 
     

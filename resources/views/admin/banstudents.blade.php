@@ -47,7 +47,7 @@
                             <tbody>
                             
                                  @foreach (@$join_students_regs->where('school_year_id', $schoolyear->id)->where('term_id', $term->id)->where('group_id', \App\StafferRegistration::where('school_year_id', '=', $schoolyear->id)->where('term_id', '=', $term->id)->where('staffer_id', $teacher->id)->first()->group_id ) as $key=>$reg_student)
-@dd($all_users)
+
                                   @foreach ($all_users as $st_user)
                                   
                                    @if ($st_user->registration_code == $reg_student->student->registration_code) 

@@ -11,9 +11,7 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-
     <!-- Bootstrap core CSS     -->
-    
     <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" />
 
         <!-- Animation library for notifications   -->
@@ -21,21 +19,16 @@
 
     <!--  Paper Dashboard core CSS    -->
     <link href="{{asset('assets/css/paper-dashboard.css')}}" rel="stylesheet"/>
-
      
     <!--  Fonts and icons     -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
     <link href="{{asset('assets/css/themify-icons.css')}}" rel="stylesheet">
 
-    {!! Charts::assets() !!}
-
 </head>
 <body>
 
 <div class="wrapper">
-
-
 
     <div class="main-panel" style="float: none; width: calc(100%);">
         <nav class="navbar navbar-default">
@@ -143,10 +136,15 @@
                                 <hr />
                                 <div class="stats">
                                   @if( $schoolyear->id == $current_school_year->id)
-                                    
-                                    <span class="text-success"> <i class="ti-calendar icon-success"></i> Start Date: {{$schoolyear->start_date->toFormatteddateString()}} <i class="ti-calendar icon-success"></i> End Date: {{$schoolyear->end_date->toFormatteddateString()}}</span>
+                                    <span class="text-success"> 
+                                        <i class="ti-calendar icon-success"></i> <strong class="text-success">Start Date:</strong> {{$schoolyear->start_date->toFormatteddateString()}} <br>
+                                        <i class="ti-calendar icon-success"></i> <strong class="text-success">End Date:</strong> {{$schoolyear->end_date->toFormatteddateString()}}
+                                    </span>
                                   @else
-                                  <span> <i class="ti-calendar icon-warning"></i> Start Date: {{$schoolyear->start_date->toFormatteddateString()}} <i class="ti-calendar icon-warning"></i> End Date: {{$schoolyear->end_date->toFormatteddateString()}}</span>
+                                    <span> 
+                                        <i class="ti-calendar icon-warning"></i> Start Date: {{$schoolyear->start_date->toFormatteddateString()}}<br>
+                                        <i class="ti-calendar icon-warning"></i> End Date: {{$schoolyear->end_date->toFormatteddateString()}}
+                                    </span>
                                   @endif
                                 </div>
                             </div>
@@ -173,16 +171,15 @@
 
 </body>
    
-
     <!--   Core JS Files   -->
     <script src="{{asset('assets/js/jquery-1.10.2.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
 
     <!--  Checkbox, Radio & Switch Plugins -->
     <script src="{{asset('assets/js/bootstrap-checkbox-radio.js')}}"></script>
-
+    
     <!--  Charts Plugin -->
-    <script src="{{asset('assets/js/chartist.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
 
     <!--  Notifications Plugin    -->
     <script src="{{asset('assets/js/bootstrap-notify.js')}}"></script>
@@ -193,13 +190,6 @@
      <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
     <script src="{{asset('assets/js/paper-dashboard.js')}}"></script>
     
-    <script type="text/javascript">
-        $(document).ready(function(){
-
-            demo.initChartist();
-
-           
-        });
-    </script>
+    
 
 </html>
