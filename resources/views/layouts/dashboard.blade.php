@@ -29,6 +29,8 @@
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
     <link href="{{asset('assets/css/themify-icons.css')}}" rel="stylesheet">
 
+    <script src="{{asset('assets/js/jquery-1.10.2.js')}}" type="text/javascript"></script>
+
 </head>
 <body>
 
@@ -116,7 +118,6 @@
    
 
     <!--   Core JS Files   -->
-    <script src="{{asset('assets/js/jquery-1.10.2.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
 
     <!--  Checkbox, Radio & Switch Plugins -->
@@ -128,7 +129,6 @@
     <!--  Charts Plugin -->
     {{-- <script src="{{asset('assets/js/chartist.min.js')}}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
-
 
     <!--  Notifications Plugin    -->
     <script src="{{asset('assets/js/bootstrap-notify.js')}}"></script>

@@ -19,9 +19,11 @@
                   @include('selectYearModal')
 
                   <script type="text/javascript">
-                    $('#selectYearModal').on('click', function(){
-                      $('#yearSelectionModal').modal('show');
-                    })
+                    $(document).ready(function() {
+                        $('#selectYearModal').on('click', function(){
+                            $('#yearSelectionModal').modal('show');
+                        });
+                    });
                   </script>
 
             </div>
