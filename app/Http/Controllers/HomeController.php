@@ -120,11 +120,20 @@ class HomeController extends Controller
         //         ->dimensions(0,230);
 
         $school_class_student_chart = new CurrentTermStats;
-        $school_class_student_chart->labels(['Overall % - Class Minimum', 'Overall % - Class Maximum', "Overall % - $student"]);
-        $school_class_student_chart->dataset("Overall % Statistics - $term->term", 'bar', [ $group_min_overall_current_term,$group_max_overall_current_term,$student_overall_current_term])->options([
-            'fill' => 'true',
-            'borderColor' => '#51C1C0']);
-        $school_class_student_chart->height(100);
+        $school_class_student_chart->labels(['Overall % - Class Minimum', 'Overall % - Class Maximum']);
+        $school_class_student_chart->dataset("Overall % Statistics - $term->term", 'bar', 
+                    [ $group_min_overall_current_term,$group_max_overall_current_term])
+                    ->options([
+                        'fill' => 'true',
+                        'borderColor' => [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)'],
+                        'backgroundColor' =>[
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)']]);
+        $school_class_student_chart->dataset("Overall % - $student", 'line', 
+                    [$student_overall_current_term, $student_overall_current_term])
+                    ->options(['fill' => 'true','borderColor' => '#3383FF', 'backgroundColor' =>'#3383FF']);
 
         return view('homeSchoolYear', 
                     compact( 'today', 'students_teachers', 'schoolyear', 
