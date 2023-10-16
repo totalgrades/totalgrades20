@@ -170,25 +170,25 @@ class CourseController extends Controller
                         'fill' => 'true',
                         'backgroundColor' =>[
                             'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)']
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 205, 86)']
                         ]);  
 
-            $chart_class_stats = new ClassStats;
-            $chart_class_stats->title('Class Statistics');
-            $chart_class_stats->labels(['Class Minimum', 'Your Grade', 'Class Maximum', 'Class Average']);
-            $chart_class_stats->dataset('','bar', 
-                        [ $class_lowest, $student_course_grade, $class_highest, $class_average])
-                        ->options([
-                            'fill' => 'true',
-                            'borderColor' => [
-                                'rgb(255, 99, 132)',
-                                'rgb(255, 159, 64)',
-                                'rgb(54, 162, 235)','rgb(255, 159, 64)'],
-                            'backgroundColor' =>[
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(255, 159, 64, 0.2)','rgba(54, 162, 235, 0.2)','rgba(255, 159, 64, 0.2)']
-                            ]); 
+        $chart_class_stats = new ClassStats;
+        $chart_class_stats->title('Class Statistics');
+        $chart_class_stats->labels(['Class Minimum', 'Your Grade', 'Class Maximum', 'Class Average']);
+        $chart_class_stats->dataset('','bar', 
+                    [ $class_lowest, $student_course_grade, $class_highest, $class_average])
+                    ->options([
+                        'fill' => 'true',
+                        'borderColor' => [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(54, 162, 235)','rgb(255, 159, 64)'],
+                        'backgroundColor' =>[
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)','rgba(54, 162, 235, 0.2)','rgba(255, 159, 64, 0.2)']
+                        ]); 
         return view('showcourse', compact( 'schoolyear', 'term', 'grade', 'course', 'grade_activities_course', 'positions','class_highest',
             'class_lowest', 'class_average', 'chart_class_stats',  'class_members', 'student_grades_course', 'student_course_grade','chart_total_score'));
 

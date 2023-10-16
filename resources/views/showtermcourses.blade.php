@@ -52,10 +52,12 @@
                             </div>
                             <div class="content">
 
-                            {!! $class_student_term_chart->render() !!}
                                 
-                                
+                                <div style="height: 300px" class="mb-4">
+                                    {!! $class_student_term_chart->container() !!}
 
+                                    {!! $class_student_term_chart->script() !!}
+                                </div>
 
 
                                 <div class="footer">

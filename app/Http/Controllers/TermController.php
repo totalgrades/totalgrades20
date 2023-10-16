@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\School_year;
 use App\Event;
 use App\Term;
@@ -15,7 +14,7 @@ use App\Student;
 use App\Grade;
 use App\Group;
 use \Crypt;
-use ConsoleTVs\Charts\Facades\Charts;
+use App\Charts\StudentTermStats;
 use App\StudentRegistration;
 use DB;
 
@@ -68,23 +67,50 @@ class TermController extends Controller
         $student_term_avg = $grade_grade_activities_student_term->avg('total'); 
 
         //School-Student-Class Statistics- current term
-        $class_student_term_chart = Charts::multi('bar', 'material')
-                // Setup the chart settings
-                ->title("Student-Class $term->term $schoolyear->school_year Statistics")
-                // A dimension of 0 means it will take 100% of the space
-                ->dimensions(0, 230) // Width x Height
-                // This defines a preset of colors already done:)
-                ->template("material")
-                ->responsive(true)
-                // You could always set them manually
-                // ->colors(['#2196F3', '#F44336', '#FFC107'])
-                // Setup the diferent datasets (this is a multi chart)
-                //->dataset('School', [$school_min,$school_max,$school_avg])
-                ->dataset('Student', [$student_term_min,$student_term_max,$student_term_avg])
-                ->dataset('Class', [$class_term_min, $class_term_max, $class_term_avg])
-                // Setup what the values mean
-                ->labels(['Minimum', 'Maximum', 'Average']);      
-
+        // $class_student_term_chart = Charts::multi('bar', 'material')
+        //         // Setup the chart settings
+        //         ->title("Student-Class $term->term $schoolyear->school_year Statistics")
+        //         // A dimension of 0 means it will take 100% of the space
+        //         ->dimensions(0, 230) // Width x Height
+        //         // This defines a preset of colors already done:)
+        //         ->template("material")
+        //         ->responsive(true)
+        //         // You could always set them manually
+        //         // ->colors(['#2196F3', '#F44336', '#FFC107'])
+        //         // Setup the diferent datasets (this is a multi chart)
+        //         //->dataset('School', [$school_min,$school_max,$school_avg])
+        //         ->dataset('Student', [$student_term_min,$student_term_max,$student_term_avg])
+        //         ->dataset('Class', [$class_term_min, $class_term_max, $class_term_avg])
+        //         // Setup what the values mean
+        //         ->labels(['Minimum', 'Maximum', 'Average']);   
+        
+        $class_student_term_chart = new StudentTermStats;
+        // Setup the chart settings
+        $class_student_term_chart->title("Student-Class $term->term $schoolyear->school_year Statistics");
+        $class_student_term_chart->labels(['Minimum', 'Maximum', 'Average']);
+        $class_student_term_chart->dataset('Class', 'bar', [$class_term_min, $class_term_max, $class_term_avg])
+                    ->options([
+                        'fill' => 'true',
+                        'borderColor' => [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(54, 162, 235)'],
+                        'backgroundColor' =>[
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)','rgba(54, 162, 235, 0.2)']
+                        ]); 
+        $class_student_term_chart->dataset('Student', 'bar', [$student_term_min,$student_term_max,$student_term_avg])
+                ->options([
+                    'fill' => 'true',
+                    'borderColor' => [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(54, 162, 235)'],
+                    'backgroundColor' =>[
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(201, 203, 207, 0.2)']
+                    ]); 
 
         return view('showtermcourses', 
         	compact( 'schoolyear', 'term_courses', 'term','class_student_term_chart',
