@@ -4,12 +4,10 @@ namespace App\Http\Controllers\AdminAuth\Attendances;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use App\School_year;
 use App\Event;
 use App\Term;
 use Carbon\Carbon;
-
 use App\Http\Requests;
 use Auth;
 use Image;
@@ -26,11 +24,15 @@ use \Crypt;
 class CrudeController extends Controller
 {
 	
-    public function showStudents( School_year $schoolyear, Term $term)
+    public function showStudents($schoolyear_id, $term_id)
     {
+        $schoolyear = School_year::find($schoolyear_id);
+        $term = Term::find($term_id);
 
+        $schoolyear_id = $schoolyear->id;
+        $term_id = $term->id;
         
-        return view('admin.attendances.showstudents', compact('schoolyear', 'term'));
+        return view('admin.attendances.showstudents', compact('schoolyear', 'term', 'schoolyear_id', 'term_id'));
 
     }
 
@@ -49,21 +51,19 @@ class CrudeController extends Controller
 
     public function postAttendance(Request $r, $student, School_year $schoolyear, Term $term) 
     {
-         
-         $student = Student::find(Crypt::decrypt($student));
-    	           
+        // dd($schoolyear->id, $term->id);
 
+        $student = Student::find(Crypt::decrypt($student));
+    	           
         $this->validate(request(), [
 
             'student_id' => 'required',
             'term_id' => 'required',
             'day' => 'required|unique_with:attendances,student_id, term_id',
             'attendance_code_id' => 'required',
-            'teacher_comment' => 'required',
+            'teacher_comment' => 'required',  
             
-            
-            ]);
-
+        ]);
 
         Attendance::insert([
 
@@ -80,7 +80,7 @@ class CrudeController extends Controller
        
         flash('Attendance Added Successfully')->success();
 
-        return redirect()->route('showstudentsattendance', ['School_year_id' => $schoolyear->id, 'term_id' => $term->id]);
+        return redirect()->route('showstudentsattendance', ['schoolyear' => $schoolyear->id, 'term' => $term->id]);
     }
 
     public function editAttendance($attendance, School_year $schoolyear, Term $term)
@@ -97,9 +97,8 @@ class CrudeController extends Controller
 
     }
 
-     public function postAttendanceUpdate(Request $r, $attendance, School_year $schoolyear, Term $term )
-
-        {
+    public function postAttendanceUpdate(Request $r, $attendance, School_year $schoolyear, Term $term )
+    {
         
         $attendance_edit = Attendance::find(Crypt::decrypt($attendance));
 
@@ -111,8 +110,7 @@ class CrudeController extends Controller
             'attendance_code_id' => 'required',
             'teacher_comment' => 'required',
                 
-                ]);
-
+        ]);
                           
         $attendance_edit->attendance_code_id= $r->attendance_code_id;
         $attendance_edit->teacher_comment= $r->teacher_comment;
@@ -121,19 +119,19 @@ class CrudeController extends Controller
 
         flash('Attendance Updated Successfully')->success();
 
-        return redirect()->route('showstudentsattendance', ['School_year_id' => $schoolyear->id, 'term_id' => $term->id]);
+        return redirect()->route('showstudentsattendance', ['schoolyear' => $schoolyear->id, 'term' => $term->id]);
 
 
-         }
+    }
 
-         public function deleteattendance($attendance)
-         {
-            Attendance::destroy(Crypt::decrypt($attendance));
+    public function deleteattendance($attendance)
+    {
+        Attendance::destroy(Crypt::decrypt($attendance));
 
-            flash('Attendance has been deleted')->error();
+        flash('Attendance has been deleted')->error();
 
-            return back();
-         }
+        return back();
+    }
 
 
 

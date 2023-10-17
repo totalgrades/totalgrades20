@@ -128,7 +128,10 @@
                             <td>
 
 
-                            <strong><a href="{{asset('/attendances/addattendance/'.Crypt::encrypt($reg_student->student_id)) }}/{{$schoolyear->id}}/{{$term->id}}"><i class="fa fa-plus fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Take attendance</a>
+                            <strong>
+                              <a href="{{asset('/attendances/addattendance/'.Crypt::encrypt($reg_student->student_id)) }}/{{$schoolyear->id}}/{{$term->id}}">
+                                <i class="fa fa-plus fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Take attendance
+                              </a>
                            
                             </td>
                             <td>
