@@ -61,7 +61,7 @@
                 </li>
 
                 <li {{{ (Request::is('reportcards/*') ? 'class=active' : '') }}}>
-                    <a href="{{ url('/reportcards/'.$schoolyear->id) }}">
+                    <a href="{{ url( '/reportcards/'.Crypt::encrypt($schoolyear->id) ) }}">
                         <i class="ti-check-box"></i>
                         <p>Report Cards</p>
                     </a>

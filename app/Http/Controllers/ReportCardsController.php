@@ -8,22 +8,18 @@ use App\Event;
 
 use App\Http\Requests;
 use App\School_year;
-
 use App\Term;
 use Carbon\Carbon;
 use App\Course;
 use Auth;
 use Image;
 use App\Student;
-
-
 use App\Grade;
 use App\Group;
 use App\Comment;
 use App\Staffer;
 use App\HealthRecord;
 use App\Attendance;
-
 use DB;
 use PDF;
 use \Crypt;
@@ -39,9 +35,13 @@ class ReportCardsController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(School_year $schoolyear)
+    public function index($schoolyear_id)
     {
-        $student_registered_groups = StudentRegistration::with('group')->where('school_year_id', '=', $schoolyear->id)->where('student_id', '=', Student::where('registration_code', '=', Auth::user()->registration_code)->first()->id)->get();
+        $schoolyear = School_year::find(Crypt::decrypt($schoolyear_id));
+
+        $student_registered_groups = StudentRegistration::with('group')->where('school_year_id', '=', $schoolyear->id)
+                ->where('student_id', '=', Student::where('registration_code', '=', Auth::user()->registration_code)
+                ->first()->id)->get();
 
         //dd($student_registered_groups);
 
@@ -52,7 +52,8 @@ class ReportCardsController extends Controller
 
     public function showReportCardTerms(School_year $schoolyear, $term)
     {
-
+        //get current date
+        $today = Carbon::today();
 
         $term = Term::find(Crypt::decrypt($term));
 
@@ -64,7 +65,6 @@ class ReportCardsController extends Controller
 
     
         $student = Student::where('registration_code', '=', Auth::user()->registration_code)->first();
-
 
 
         $student_group = StudentRegistration::with('group')->where('school_year_id', '=', $schoolyear->id)->where('term_id', '=', $term->id)->where('student_id', '=', Student::where('registration_code', '=', Auth::user()->registration_code)->first()->id)->first();
@@ -152,135 +152,133 @@ class ReportCardsController extends Controller
         $attendance_late = $attendance_code->where('code_name', '=', 'Late')->count();
 
         
-         //dd($courses);         
+        // dd($courses);         
         
         return view('showtermreportcard', 
         	compact( 'schoolyear', 'today', 'term','terms','term_id', 'student_group',
         			'student', 'grade', 'course', 'course_grades', 'courses',
                     'course_grade_all_students', 'comment_all', 'student_teacher', 'students_all', 'next_group',
                     'sorted_grouped', 'next_term', 'health_record', 'attendance_present',
-                    'attendance_absent', 'attendance_late', 'attendance', 'grade_grade_activities_ranking'
+                    'attendance_absent', 'attendance_late', 'attendance', 'grade_grade_activities_ranking','today'
                     ));
 
-        }
+    }
 
-        public function pdfshow($id)
-            {
+    public function pdfshow($id)
+    {
+        //get current date
+        $today = Carbon::today();
 
-                //get current date
-                $today = Carbon::today();
+        $term = Term::find(Crypt::decrypt($id));
 
-                $term = Term::find(Crypt::decrypt($id));
-
-                $term_id = $term->id;
-
-                       
-                $user = Auth::user();
-
-                $reg_code = $user->registration_code;
-
-                $student = Student::where('registration_code', '=', $reg_code)->first();
-
-
-
-                $student_group = Group::where('id','=', $student->group_id)->first();
-
-
-                $next_group = Group::where('id','=', $student->group_id+2)->first();
+        $term_id = $term->id;
 
                 
-                $student_teacher = Staffer::where('group_id', '=', $student_group->id )->first();
+        $user = Auth::user();
 
-                $students_all = Student::where('group_id', '=', $student_group->id)->get();
+        $reg_code = $user->registration_code;
 
-                                      
-                //get term
-
-                $terms = Term::get();
-
-                //dd($student_group);
-
-
-                
-                $course_grade = Course::join('grades', 'courses.id', '=', 'grades.course_id')
-                ->where('student_id', '=', $student->id)
-                ->where('courses.term_id', '=', $term->id)
-                ->get();
-
-                //dd($course_grade->sum('total')/$course_grade->count());
-
-                
-                $mgb = DB::table('grades')->groupBy('course_id')->get(['course_id', DB::raw('MAX(total) as max')]);
+        $student = Student::where('registration_code', '=', $reg_code)->first();
 
 
 
-                $mgb_lowest = DB::table('grades')->groupBy('course_id')->get(['course_id', DB::raw('min(total) as min')]);
-
-           
-                $mgb_avg = DB::table('grades')->groupBy('course_id')->get(['course_id', DB::raw('avg(total) as avg')]);
-                
-                
-
-                $pluck_course_id = $mgb->pluck('course_id')->toArray(); 
-
-                $pluck_course_id_min = $mgb_lowest->pluck('course_id')->toArray();
-                
-                $pluck_course_id_avg = $mgb_avg->pluck('course_id')->toArray(); 
+        $student_group = Group::where('id','=', $student->group_id)->first();
 
 
-                $course_grade_all_students = Course::join('grades', 'courses.id', '=', 'grades.course_id')
-                ->where('courses.group_id', '=', $student->group_id)
-                ->where('courses.term_id', '=', $term->id)
-                ->get();
+        $next_group = Group::where('id','=', $student->group_id+2)->first();
 
-                
-            
-                $sorted = $course_grade_all_students->sortByDesc('total');
+        
+        $student_teacher = Staffer::where('group_id', '=', $student_group->id )->first();
 
-                $sorted_grouped = $course_grade_all_students->sortByDesc('total')->groupBy('course_id');
+        $students_all = Student::where('group_id', '=', $student_group->id)->get();
 
-                
+                                
+        //get term
 
+        $terms = Term::get();
 
-                //addd comments
-                $comment_all = Comment::where('student_id', '=', $student->id)
-                                            ->where('term_id', '=', $term_id)
-                                            ->first();
-
-                //get health records
-                $health_record = HealthRecord::where('student_id', '=', $student->id)
-                        ->where('term_id', '=', $term->id)
-                        ->first();
-
-               
-                $attendance = Attendance::where('student_id', '=', $student->id)
-                                            ->where('term_id', '=', $term->id)
-                                            ->count();
-
-                $attendance_code = Attendance::join('attendance_codes', 'attendances.attendance_code_id', '=', 'attendance_codes.id')
-                                            ->where('student_id', '=', $student->id)
-                                            ->where('term_id', '=', $term->id)
-                                            ->get();
+        //dd($student_group);
 
 
-                $attendance_present = $attendance_code->where('code_name', '=', 'Present')->count();
-                $attendance_absent = $attendance_code->where('code_name', '=', 'Absent')->count();
-                $attendance_late = $attendance_code->where('code_name', '=', 'Late')->count();
-              
+        
+        $course_grade = Course::join('grades', 'courses.id', '=', 'grades.course_id')
+        ->where('student_id', '=', $student->id)
+        ->where('courses.term_id', '=', $term->id)
+        ->get();
 
+        //dd($course_grade->sum('total')/$course_grade->count());
 
-               /* $pdf = PDF::loadView('pdfshowtermreportcard', 
-                    compact('today', 'term','terms','term_id', 'student_group',
-                            'student', 'grade', 'course', 'course_grade',
-                            'mgb', 'mgb_lowest', 'mgb_avg', 
-                            'pluck_course_id', 'pluck_course_id_min', 'pluck_course_id_avg',
-                            'comment_all', 'student_teacher', 'students_all', 'next_group', 'sorted_grouped'          
-                            ))->setPaper('a0')->setOrientation('landscape');
-
-                return $pdf->download('reportcard.pdf');
+        
+        $mgb = DB::table('grades')->groupBy('course_id')->get(['course_id', DB::raw('MAX(total) as max')]);
 
 
 
-                }*/
-}
+        $mgb_lowest = DB::table('grades')->groupBy('course_id')->get(['course_id', DB::raw('min(total) as min')]);
+
+    
+        $mgb_avg = DB::table('grades')->groupBy('course_id')->get(['course_id', DB::raw('avg(total) as avg')]);
+        
+        
+
+        $pluck_course_id = $mgb->pluck('course_id')->toArray(); 
+
+        $pluck_course_id_min = $mgb_lowest->pluck('course_id')->toArray();
+        
+        $pluck_course_id_avg = $mgb_avg->pluck('course_id')->toArray(); 
+
+
+        $course_grade_all_students = Course::join('grades', 'courses.id', '=', 'grades.course_id')
+        ->where('courses.group_id', '=', $student->group_id)
+        ->where('courses.term_id', '=', $term->id)
+        ->get();
+
+        
+    
+        $sorted = $course_grade_all_students->sortByDesc('total');
+
+        $sorted_grouped = $course_grade_all_students->sortByDesc('total')->groupBy('course_id');
+
+        
+
+
+        //addd comments
+        $comment_all = Comment::where('student_id', '=', $student->id)
+                                    ->where('term_id', '=', $term_id)
+                                    ->first();
+
+        //get health records
+        $health_record = HealthRecord::where('student_id', '=', $student->id)
+                ->where('term_id', '=', $term->id)
+                ->first();
+
+        
+        $attendance = Attendance::where('student_id', '=', $student->id)
+                                    ->where('term_id', '=', $term->id)
+                                    ->count();
+
+        $attendance_code = Attendance::join('attendance_codes', 'attendances.attendance_code_id', '=', 'attendance_codes.id')
+                                    ->where('student_id', '=', $student->id)
+                                    ->where('term_id', '=', $term->id)
+                                    ->get();
+
+
+        $attendance_present = $attendance_code->where('code_name', '=', 'Present')->count();
+        $attendance_absent = $attendance_code->where('code_name', '=', 'Absent')->count();
+        $attendance_late = $attendance_code->where('code_name', '=', 'Late')->count();
+        
+
+
+        $pdf = PDF::loadView('pdfshowtermreportcard', 
+            compact('today', 'term','terms','term_id', 'student_group',
+                    'student', 'grade', 'course', 'course_grade',
+                    'mgb', 'mgb_lowest', 'mgb_avg', 
+                    'pluck_course_id', 'pluck_course_id_min', 'pluck_course_id_avg',
+                    'comment_all', 'student_teacher', 'students_all', 'next_group', 'sorted_grouped'          
+                    ))->setPaper('a0')->setOrientation('landscape');
+
+        return $pdf->download('reportcard.pdf');
+
+
+
+    }
 }

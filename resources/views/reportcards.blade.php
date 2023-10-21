@@ -49,10 +49,9 @@
                                                 </td>
                                                 <td>
                                                     @foreach($student_registered_groups->where('term_id',$term->id) as $student_group)
-                                                        
-                                                            <a href="{{asset('/showtermreportcard/'.$schoolyear->id) }}/{{Crypt::encrypt($term->id)}}" style="font-size: 16px; font-weight: bold;">VIEW&nbsp;<i class="fa fa-check-square-o fa-2x"></i></a>
-                                                        
-                                                            
+                                                        <a href="{{asset('/showtermreportcard/'.$schoolyear->id) }}/{{Crypt::encrypt($term->id)}}" style="font-size: 16px; font-weight: bold;">
+                                                            VIEW&nbsp;<i class="fa fa-check-square-o fa-2x"></i>
+                                                        </a>  
                                                     @endforeach
                                                 {{-- <a href="{{asset('/pdfreportcard/'.Crypt::encrypt($term->id)) }}">Print&nbsp;<i class="fa fa-print" aria-hidden="true"></i></a> --}}
                                                 </td>

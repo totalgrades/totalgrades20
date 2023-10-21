@@ -40,12 +40,11 @@ Route::get('/showcourse/{schoolyear}/{term}/{course}', 'CourseController@showCou
 //Route::get('/courses', 'CourseController@index');
 Route::get('/showtermcourses/{schoolyear}/{term}', 'TermController@showTermCourses');
 
-//route for report card
+//route for report card - students
+//- current report card. not in use?????????????????
 Route::get('/currentreportcard', 'CurrentReportCardController@index');
-
 Route::get('/reportcards/{schoolyear}', 'ReportCardsController@index');
 Route::get('/showtermreportcard/{schoolyear}/{term}', 'ReportCardsController@showReportCardTerms');
-
 Route::get('/pdfreportcard/{term}', 'ReportCardsController@pdfshow');
 
 //Attendance
