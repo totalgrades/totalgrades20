@@ -444,33 +444,8 @@
 
                           <td class="text-center">
 
-                              
-                              @if ($grade->sum < 65)
-                              F
-                              @elseif ($grade->sum<= 66 && $grade->sum >=65)
-                              D
-                              @elseif ($grade->sum<= 69 && $grade->sum >=67)
-                              D+
-                              @elseif ($grade->sum<= 73 && $grade->sum >=70)
-                              C-
-                              @elseif ($grade->sum<= 76 && $grade->sum >=74)
-                              C
-                              @elseif ($grade->sum<= 79 && $grade->sum >=77)
-                              C+
-                              @elseif ($grade->sum<= 83 && $grade->sum >=80)
-                              B-
-                              @elseif ($grade->sum<= 86 && $grade->sum >=84)
-                              B
-                              @elseif ($grade->sum<= 89 && $grade->sum >=87)
-                              B+
-                              @elseif ($grade->sum<= 93 && $grade->sum >=90)
-                              A-
-                              @elseif ($grade->sum<= 96 && $grade->sum >=94)
-                              A
-                              @elseif ($grade->sum>= 97)
-                              A+
-                              @endif
-
+                            {{ \App\Grades\LetterGrade::get_letter_grade($grade->sum) }}
+                      
                            
                           </td>
                         
