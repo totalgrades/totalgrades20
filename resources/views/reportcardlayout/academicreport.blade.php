@@ -105,9 +105,9 @@
 
 
                                         <td class="text-center">
-
+                                            {{ \App\Grades\LetterGrade::get_letter_grade($grade->total) }}
                                             
-                                            @if ($grade->total < 65)
+                                            {{-- @if ($grade->total < 65)
                                             F
                                             @elseif ($grade->total<= 66 && $grade->total >=65)
                                             D
@@ -131,7 +131,7 @@
                                             A
                                             @elseif ($grade->total>= 97)
                                             A+
-                                            @endif
+                                            @endif --}}
 
                                          
                                         </td>
