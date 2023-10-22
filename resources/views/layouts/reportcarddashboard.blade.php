@@ -33,8 +33,6 @@
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
     <link href="{{asset('assets/css/themify-icons.css')}}" rel="stylesheet">
 
-    {!! Charts::assets() !!}
-
 </head>
 <body>
 

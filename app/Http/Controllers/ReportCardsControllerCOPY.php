@@ -155,9 +155,9 @@ class ReportCardsController extends Controller
         // dd($courses);         
         
         return view('showtermreportcard', 
-        	compact( 'schoolyear', 'today', 'term','terms','courses','term_id', 'student_group',
-        			'student', 'course_grades', 
-                    'course_grade_all_students', 'comment_all', 'student_teacher', 'students_all', 
+        	compact( 'schoolyear', 'today', 'term','terms','term_id', 'student_group',
+        			'student', 'course', 'course_grades', 'courses',
+                    'course_grade_all_students', 'comment_all', 'student_teacher', 'students_all', 'next_group',
                     'sorted_grouped', 'next_term', 'health_record', 'attendance_present',
                     'attendance_absent', 'attendance_late', 'attendance', 'grade_grade_activities_ranking','today'
                     ));
