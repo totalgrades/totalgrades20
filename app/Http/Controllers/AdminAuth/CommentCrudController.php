@@ -4,12 +4,9 @@ namespace App\Http\Controllers\AdminAuth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use App\Event;
-
 use App\Http\Requests;
 use App\School_year;
-
 use App\Term;
 use Carbon\Carbon;
 use App\Course;
@@ -17,8 +14,6 @@ use Auth;
 use Image;
 use App\Student;
 use App\User;
-
-
 use App\Grade;
 use App\Group;
 use App\Comment;
@@ -67,7 +62,7 @@ class CommentCrudController extends Controller
 
        
 
-    	return redirect()->route('adminhomeSchoolyearTerm', [ 'schoolyear_id' => $schoolyear->id, 'term_id' => $term->id]);;
+    	return redirect()->route('adminhomeSchoolyearTerm', [ 'schoolyear' => $schoolyear->id, 'term' => $term->id]);;
     }
 
     public function editComment($comment, $student, School_year $schoolyear, Term $term)
@@ -100,7 +95,7 @@ class CommentCrudController extends Controller
             
         $student_comment->save();
 
-        return redirect()->route('adminhomeSchoolyearTerm', [ 'schoolyear_id' => $schoolyear->id, 'term_id' => $term->id]);
+        return redirect()->route('adminhomeSchoolyearTerm', [ 'schoolyear' => $schoolyear->id, 'term' => $term->id]);
 
      }
 

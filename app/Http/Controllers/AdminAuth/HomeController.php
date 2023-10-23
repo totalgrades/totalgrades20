@@ -44,7 +44,6 @@ class HomeController extends Controller
 
     public function index(School_year $schoolyear, Term $term)
     {
-
       
         return view('admin.home', compact('schoolyear', 'term'));
     }
