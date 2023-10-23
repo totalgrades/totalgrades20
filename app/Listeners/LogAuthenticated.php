@@ -5,7 +5,6 @@ namespace App\Listeners;
 use Illuminate\Auth\Events\Authenticated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
 use App\LoginActivity;
 use Request;
 use Location;

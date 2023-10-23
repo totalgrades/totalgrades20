@@ -206,11 +206,12 @@
     <!--  Checkbox, Radio & Switch Plugins -->
     <script src="{{asset('assets/js/bootstrap-checkbox-radio.js')}}"></script>
 
-     <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
-     <script src="{{asset('assets/js/paper-dashboard.js')}}"></script>
+    <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
+    <script src="{{asset('assets/js/paper-dashboard.js')}}"></script>
 
     <!--  Charts Plugin -->
-    <script src="{{asset('assets/js/chartist.min.js')}}"></script>
+    {{-- <script src="{{asset('assets/js/chartist.min.js')}}"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
 
     <!--  Notifications Plugin    -->
     <script src="{{asset('assets/js/bootstrap-notify.js')}}"></script>
