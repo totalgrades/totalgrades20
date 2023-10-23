@@ -116,7 +116,6 @@
 
 </body>
    
-
     <!--   Core JS Files   -->
     <script src="{{asset('assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
 
